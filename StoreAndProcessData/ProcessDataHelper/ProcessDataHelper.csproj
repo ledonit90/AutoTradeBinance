@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DecideToTrade.cs" />
+    <Compile Include="ExpectedValue.cs" />
     <Compile Include="Models\MessageAction.cs" />
     <Compile Include="Models\NodeTimeTrade.cs" />
     <Compile Include="Models\TradeMessage.cs" />
