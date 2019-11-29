@@ -1,19 +1,17 @@
-﻿using BinanceLibAPI.Models;
+﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
-using RabbitMQ.Client.Events;
 
-namespace BinanceLibAPI.RabbitMQ
+namespace Pricesws.RabittMQ
 {
     public class Publisher
     {
         private ConnectionFactory _cf;
         private IConnection _conn;
         private IModel _channel;
-        private IModel _Messagechannel;
         private string messageActionQueueName;
         private string queueName;
         private string exchangeName;
@@ -24,8 +22,8 @@ namespace BinanceLibAPI.RabbitMQ
             {
                 this.queueName = queueName;
                 this.exchangeName = exchangeName;
-                //messageActionQueueName = "message" + queueName;
-                _cf = new ConnectionFactory() { HostName = hostname, Port = port,  UserName = "muabanaltcoinnhe", Password = "Levandon_90" };
+                messageActionQueueName = "message" + queueName;
+                _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST };
                 _conn = _cf.CreateConnection();
                 _channel = _conn.CreateModel();
                 _channel.ExchangeDeclare(exchange: exchangeName, type: "topic");
@@ -35,11 +33,11 @@ namespace BinanceLibAPI.RabbitMQ
                                      autoDelete: autoDelete,
                                      arguments: arguments);
 
-                //_channel.QueueBind(queue: messageActionQueueName,
-                //              exchange: exchangeName,
-                //              routingKey: messageActionQueueName);
+                _channel.QueueBind(queue: messageActionQueueName,
+                              exchange: exchangeName,
+                              routingKey: messageActionQueueName);
 
-                //ReceiveMessageAction();
+                ReceiveMessageAction();
             }
             catch (Exception ex)
             {
@@ -71,10 +69,9 @@ namespace BinanceLibAPI.RabbitMQ
         {
             try
             {
-                StreamMessage streamMessage = JsonConvert.DeserializeObject<StreamMessage>(message);
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(streamMessage.data.p));
-                _channel.BasicPublish(exchange : exchangeName,
-                                     routingKey : queueName,
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+                _channel.BasicPublish(exchange: exchangeName,
+                                     routingKey: queueName,
                                      basicProperties: null,
                                      body: body);
             }

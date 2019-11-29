@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using BinanceLibAPI.Models;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace BinanceLibAPI
 {
@@ -107,6 +108,49 @@ namespace BinanceLibAPI
                 }
             }
         }
+
+        public async Task<DepositeAddressResponse> getDepositeAddress(string Coins)
+        {
+            var responseServerTime = await GetServerTimeAsync();
+            string requestURL = "asset="+ Coins + "&status=true&" + "recvWindow=5000&timestamp=" + responseServerTime;
+
+            string signature = GenerateSignature(requestURL);
+            requestURL += "&signature=" + signature;
+            requestURL = LinkConfig.DepositAddress + "?" + requestURL;
+            using (var httpClient = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(new HttpMethod("GET"), requestURL))
+                {
+                    request.Headers.TryAddWithoutValidation("X-MBX-APIKEY", this.apiKey);
+                    var response = await httpClient.SendAsync(request);
+                    var resultInfo = response.Content.ReadAsStringAsync().Result;
+                    var accountInfo = JsonConvert.DeserializeObject<DepositeAddressResponse>(resultInfo);
+                    accountInfo.Description = resultInfo;
+                    return accountInfo;
+                }
+            }
+        }
+
+        //public async Task getDepositeAddressAsync()
+        //{
+        //    using (SanGiaoDichEntities db = new SanGiaoDichEntities())
+        //    {
+        //        var listCoins = db.Coins.Where(x=>x.Active == true).ToList();
+        //        foreach (var coin in listCoins)
+        //        {
+        //            // ngay xua toi da tung
+        //            var xxx = await getDepositeAddress(coin.Code);
+        //            MyAddress address = new MyAddress();
+        //            address.account = "ledonit90@gmail.com";
+        //            address.San = "Binance";
+        //            address.Coin = coin;
+        //            address.Address = xxx.address;
+        //            address.Description = xxx.Description;
+        //            db.MyAddresses.Add(address);
+        //            db.SaveChanges();
+        //        }
+        //    }
+        //}
 
         public class serverTimes
         {

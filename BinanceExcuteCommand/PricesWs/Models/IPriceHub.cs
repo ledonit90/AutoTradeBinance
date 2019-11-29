@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI
+namespace Pricesws.Models
 {
-    public class AutoBuyBNB
+    public interface IPriceHub
     {
-        //public static BuyBnB
+        Task SendMessageAsync(string message);
     }
 }

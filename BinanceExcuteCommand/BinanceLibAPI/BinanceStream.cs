@@ -1,4 +1,6 @@
-﻿using BinanceLibAPI.RabbitMQ;
+﻿using BinanceLibAPI.Models;
+using BinanceLibAPI.RabbitMQ;
+using Newtonsoft.Json;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -20,7 +22,7 @@ namespace BinanceLibAPI
 
         public async Task getDataStream()
         {
-            Publisher test = new Publisher("localhost", 15672, "getData", "usdtbtc");
+            Publisher test = new Publisher("34.221.95.44", 5672, "getData", "usdtbtc");
             using (ClientWebSocket ws = new ClientWebSocket())
             {
                 Uri serverUri = new Uri(this.hostUri);
