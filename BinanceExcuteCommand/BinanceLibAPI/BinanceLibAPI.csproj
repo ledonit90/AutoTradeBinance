@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AutoBuyBNB.cs" />
     <Compile Include="BinanceStream.cs" />
+    <Compile Include="CallAPI.cs" />
     <Compile Include="DisconnectionType.cs" />
     <Compile Include="Exceptions\WebsocketBadInputException.cs" />
     <Compile Include="Exceptions\WebsocketException.cs" />
