@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
+using System.Configuration;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.Logging;
 
-namespace BinanceLibAPI
+namespace PricesWs.Helper
 {
     public class CallWebAPI
     {
@@ -97,9 +98,7 @@ namespace BinanceLibAPI
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
-
-            //Send request to server
-            Logger.Debug("CallAPI Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
+            
             HttpContent content = CreateHttpContent(JObj);
             try
             {
@@ -123,38 +122,6 @@ namespace BinanceLibAPI
 
             return retVal;
         }
-        //public string CallAPI(string url, JToken JObj)
-        //{
-        //    string retVal = "";
-        //    HttpClient client = new HttpClient();
-        //    client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
-
-        //    //Send request to server
-        //    Logger.Debug("Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
-        //    HttpContent content = new StringContent(JsonConvert.SerializeObject(JObj), Encoding.UTF8, CommonConstants.RequestHeader.JSON);
-        //    try
-        //    {
-        //        var res = client.PostAsync(string.Format(url), content).Result;
-        //        if (res.IsSuccessStatusCode)
-        //        {
-        //            retVal = res.Content.ReadAsStringAsync().Result;
-        //            Logger.Debug("Res message = " + retVal);
-        //        }
-        //        else
-        //        {
-        //            Logger.Debug("Error message = " + res.ReasonPhrase);
-        //        }
-        //    }
-        //    catch (Exception err)
-        //    {
-        //        Logger.error(err);
-        //    }
-
-        //    return retVal;
-        //}
 
         public HttpResponseMessage PostAPI(string url, JObject JObj)
         {
