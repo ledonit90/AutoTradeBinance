@@ -94,7 +94,7 @@ namespace PricesWs.Helper
             //}
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+            client.BaseAddress = new Uri(constan);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));

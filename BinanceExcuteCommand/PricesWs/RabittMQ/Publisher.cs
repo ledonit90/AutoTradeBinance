@@ -16,7 +16,7 @@ namespace Pricesws.RabittMQ
         private string queueName;
         private string exchangeName;
 
-        public Publisher(string hostname, int port, string exchangeName, string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
+        public Publisher(string exchangeName = RabbitConfig.EXCHANGENAME, string queueName = RabbitConfig.QUEUENAME, bool durable = true, bool exclusive = false, bool autoDelete = false, string hostname = RabbitConfig.HOST, int port = RabbitConfig.Port, IDictionary<string, object> arguments = null)
         {
             try
             {
@@ -79,6 +79,22 @@ namespace Pricesws.RabittMQ
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public void PublishMessage(string message)
+        {
+                _channel.QueueDeclare(queue: queueName,
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                var body = Encoding.UTF8.GetBytes(message);
+
+                _channel.BasicPublish(exchange: "",
+                                     routingKey: queueName,
+                                     basicProperties: null,
+                                     body: body);
         }
     }
 }
