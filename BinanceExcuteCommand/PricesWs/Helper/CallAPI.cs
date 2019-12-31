@@ -94,7 +94,7 @@ namespace PricesWs.Helper
             //}
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(constan);
+            client.BaseAddress = new Uri(ConstantVarURL.HOST);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
