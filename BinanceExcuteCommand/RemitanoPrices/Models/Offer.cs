@@ -55,9 +55,20 @@ namespace RemitanoPrices.Models
         public int total_items { get; set; }
     }
 
-    public class RootObject
+
+    public class Offers
     {
         public List<Offer> offers { get; set; }
         public Meta meta { get; set; }
+    }
+
+    public class RequestOffers
+    {
+        public string offer_type { get; set; } // buy or sell
+        public string country_code { get; set; } // vn
+        public string coin { get; set; } // eth, btc
+        public string offline { get; set; }
+        public string page { get; set; }
+        public string coin_currency { get; set; }
     }
 }

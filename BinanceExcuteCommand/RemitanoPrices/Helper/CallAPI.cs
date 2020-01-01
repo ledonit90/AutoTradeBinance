@@ -1,16 +1,23 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System;
-using Microsoft.Extensions.Logging;
+using System.Net;
 
-namespace PricesWs.Helper
+namespace RemitanoPrices.Helper
 {
+    public class ResponseData
+    {
+        public int code { get; set; }
+        public int status { get; set; }
+        public string message { get; set; }
+        public object data { get; set; }
+    }
+
     public class CallWebAPI
     {
         //private static string ApiUrlAppSetting = "API_URI";
@@ -94,10 +101,10 @@ namespace PricesWs.Helper
             //}
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(ConstantVarURL.HOST);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+            //client.BaseAddress = new Uri(ConstantVarURL.BASEURL);
+            ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
             HttpContent content = CreateHttpContent(JObj);
             try
@@ -108,16 +115,16 @@ namespace PricesWs.Helper
                 {
                     retVal = res.Content.ReadAsStringAsync().Result;
                     //SetIntoCache(url, JObj.ToString(), retVal);
-                    Logger.Debug("Res message = " + retVal);
+                    LoggingHelper.LogInfo("Res message = " + retVal);
                 }
                 else
                 {
-                    Logger.Debug("Error message = " + res.ReasonPhrase);
+                    LoggingHelper.LogException("Error message = " + res.ReasonPhrase);
                 }
             }
             catch (Exception err)
             {
-                Logger.error(err);
+                LoggingHelper.LogException(err.ToString());
             }
 
             return retVal;
@@ -126,13 +133,13 @@ namespace PricesWs.Helper
         public HttpResponseMessage PostAPI(string url, JObject JObj)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+            ////client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+            ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //Send request to server
-            Logger.Debug("PostAPI Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
+            LoggingHelper.LogDebug("PostAPI Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
 
             HttpContent content = CreateHttpContent(JObj);
             try
@@ -142,7 +149,7 @@ namespace PricesWs.Helper
             }
             catch (Exception err)
             {
-                Logger.error(err);
+                LoggingHelper.LogException(err.ToString());
                 return null;
             }
         }
@@ -162,12 +169,12 @@ namespace PricesWs.Helper
             {
                 HttpClient client = new HttpClient();
                 client.Timeout = new TimeSpan(0, 3, 0);
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                ////client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(CommonConstants.RequestHeader.JSON));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                Logger.Debug("CallAPIGet Sending GET " + client.BaseAddress + url + " == parans = ");
+                LoggingHelper.LogDebug("CallAPIGet Sending GET " + client.BaseAddress + url + " == parans = ");
 
                 //Send request to server
                 var res = client.GetAsync(string.Format(url)).Result;
@@ -177,23 +184,23 @@ namespace PricesWs.Helper
                 {
                     _result = res.Content.ReadAsStringAsync().Result;
                     //SetIntoCache(url, "", _result);
-                    Logger.Debug("Res message = " + _result);
+                    LoggingHelper.LogDebug("Res message = " + _result);
                 }
                 else
                 {
-                    Logger.Debug("Error message = " + res.ReasonPhrase);
+                    LoggingHelper.LogDebug("Error message = " + res.ReasonPhrase);
                 }
             }
             catch (Exception err)
             {
-                Logger.error(err);
+                LoggingHelper.LogException(err.ToString());
             }
             return _result;
         }
 
         public HttpContent CreateHttpContent(JObject obj)
         {
-            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, CommonConstants.RequestHeader.JSON);
+            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
         }
 
         public object RestApiGet(string url, Dictionary<string, string> dctParams = null)
@@ -202,20 +209,20 @@ namespace PricesWs.Helper
             ResponseData obj = new ResponseData();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                //client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
                 BuildUrlParams(ref url, dctParams);
 
                 var response = client.GetAsync(url).Result;
-                Logger.Debug("RestApiGet Sending GET " + client.BaseAddress + url + " == parans = ");
+                LoggingHelper.LogDebug("RestApiGet Sending GET " + client.BaseAddress + url + " == parans = ");
 
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = response.Content.ReadAsStringAsync().Result;
-                    Logger.Debug("Res message = " + responseString);
+                    LoggingHelper.LogDebug("Res message = " + responseString);
                     obj = JsonConvert.DeserializeObject<ResponseData>(responseString);
                 }
             }
@@ -228,12 +235,12 @@ namespace PricesWs.Helper
             ResponseData obj = new ResponseData();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                //client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
-                Logger.Debug("RestApiGet List Sending GET " + client.BaseAddress + url + " == parans = ");
+                LoggingHelper.LogDebug("RestApiGet List Sending GET " + client.BaseAddress + url + " == parans = ");
 
                 if (overrideTimeout != null)
                 {
@@ -259,10 +266,10 @@ namespace PricesWs.Helper
             ResponseData objResponse = new ResponseData();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                //client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
                 if (overrideTimeOut != null && overrideTimeOut.HasValue)
                 {
@@ -272,7 +279,7 @@ namespace PricesWs.Helper
                 var jsonRequest = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
 
-                Logger.Debug("RestApiPost Sending POST " + client.BaseAddress + url + " == parans = " + jsonRequest.ToString());
+                LoggingHelper.LogDebug("RestApiPost Sending POST " + client.BaseAddress + url + " == parans = " + jsonRequest.ToString());
 
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
@@ -291,10 +298,10 @@ namespace PricesWs.Helper
             ResponseData objResponse = new ResponseData();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                //client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
                 BuildUrlParams(ref url, dctParams);
 
@@ -304,7 +311,7 @@ namespace PricesWs.Helper
                     var jsonRequest = JsonConvert.SerializeObject(obj);
                     content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
                 }
-                Logger.Debug("RestApiPost List Sending POST " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
+                LoggingHelper.LogDebug("RestApiPost List Sending POST " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
 
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
@@ -323,14 +330,14 @@ namespace PricesWs.Helper
             ResponseData objResponse = new ResponseData();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
+                //client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
                 BuildUrlParams(ref url, dctParams);
 
-                Logger.Debug("RestApiPost List Sending PUT " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
+                LoggingHelper.LogDebug("RestApiPost List Sending PUT " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
 
                 var response = client.PutAsync(url, null).Result;
                 if (response.IsSuccessStatusCode)
