@@ -71,10 +71,7 @@ namespace RemitanoPrices.Models
         public int page { get; set; } = 1;
         public string coin_currency { get; set; } = "btc";
 
-        public RequestOffers()
-        {
-
-        }
+        public RequestOffers(){}
         public RequestOffers(string coin)
         {
             this.coin = coin;

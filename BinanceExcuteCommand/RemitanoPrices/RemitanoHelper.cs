@@ -26,6 +26,8 @@ namespace RemitanoPrices
         public Task<CoinPrice> getCoinPrice(string coin)
         {
             RequestOffers rq = new RequestOffers(coin);
+            var strRq = ParameterHelper.ObjectToQueryString(rq);
+
         }
 
         public Task<double> AveragePrice()
