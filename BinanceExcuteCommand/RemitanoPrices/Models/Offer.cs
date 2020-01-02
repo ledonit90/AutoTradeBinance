@@ -64,11 +64,21 @@ namespace RemitanoPrices.Models
 
     public class RequestOffers
     {
-        public string offer_type { get; set; } // buy or sell
-        public string country_code { get; set; } // vn
-        public string coin { get; set; } // eth, btc
-        public string offline { get; set; }
-        public string page { get; set; }
-        public string coin_currency { get; set; }
+        public string offer_type { get; set; } = "buy";    // buy or sell
+        public string country_code { get; set; } = "vn"; // vn
+        public string coin { get; set; } = "btc";         // eth, btc
+        public bool offline { get; set; } = false ;
+        public int page { get; set; } = 1;
+        public string coin_currency { get; set; } = "btc";
+
+        public RequestOffers()
+        {
+
+        }
+        public RequestOffers(string coin)
+        {
+            this.coin = coin;
+            this.coin_currency = coin;
+        }
     }
 }

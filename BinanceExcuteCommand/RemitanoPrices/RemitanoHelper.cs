@@ -13,7 +13,7 @@ namespace RemitanoPrices
     {
         CallWebAPI api = new CallWebAPI();
         #region Calculator Price
-        public Task<Offers> GetCoinOffers(RequestOffers rq)
+        public Offers GetCoinOffers(RequestOffers rq)
         {
             var queryString = ParameterHelper.ObjectToQueryString(rq);
             var res = api.CallAPIGet(queryString);
@@ -25,7 +25,7 @@ namespace RemitanoPrices
 
         public Task<CoinPrice> getCoinPrice(string coin)
         {
-            
+            RequestOffers rq = new RequestOffers(coin);
         }
 
         public Task<double> AveragePrice()
