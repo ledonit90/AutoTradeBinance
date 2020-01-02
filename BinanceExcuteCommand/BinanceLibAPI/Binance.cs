@@ -23,6 +23,7 @@ namespace BinanceLibAPI
         public string GenerateSignature(string RequestBody)
         {
             var result = hasher.HmacSha256(apiSecretKey, RequestBody);
+
             return result;
         }
 
