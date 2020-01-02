@@ -11,6 +11,7 @@ namespace BinanceLibAPI.Models
         public static readonly string ExchangeInfo = "https://www.binance.com/api/v1/exchangeInfo";
         public static readonly string exChangeInfo = "https://www.binance.com/api/v1/exchangeInfo";
         public static readonly string serverTime = "https://www.binance.com/api/v1/time";
+        public static readonly string DepositAddress = "https://www.binance.com//wapi/v3/depositAddress.html";
 
         public static readonly string Test_connectivity = "https://www.binance.com/api/api/v1/ping";
         // Parameters: NONE

@@ -11,7 +11,7 @@ namespace StoreAndProcessData
     {
         static void Main(string[] args)
         {
-            Subscriber test = new Subscriber("localhost", 5672,"getData","usdtbtc");
+            Subscriber test = new Subscriber("34.221.95.44", 5672, "getData", "usdtbtc");
             test.SubcribeAChannel();
             Console.WriteLine("----------------------------------------------------------");
         }
