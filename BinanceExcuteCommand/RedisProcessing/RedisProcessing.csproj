@@ -94,5 +94,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RemitanoPrices\RemitanoPrices.csproj">
+      <Project>{84c5f711-6959-420e-87b0-2ec67f1583ef}</Project>
+      <Name>RemitanoPrices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,6 +19,6 @@ namespace RedisProcessing
 
         public static ConnectionMultiplexer Connection => LazyConnection.Value;
 
-        public static IDatabase RedisCache => Connection.GetDatabase();
+        public static IDatabase RedisCache(int IdDatabase) => Connection.GetDatabase(IdDatabase);
     }
 }
