@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RemitanoPrices.Helper
 {
@@ -154,27 +156,18 @@ namespace RemitanoPrices.Helper
             }
         }
 
-        public string CallAPIGet(string url)
+        public Task<string> CallAPIGet(string url)
         {
-            string _result = string.Empty;
-
-            //var resultFromCache = GetFromCache(url, "");
-            //if (resultFromCache != null)
-            //{
-            //    _result = resultFromCache.ToString();
-            //    return _result;
-            //}
-
+            Task<string> _result = null;
             try
             {
                 HttpClient client = new HttpClient();
                 client.Timeout = new TimeSpan(0, 3, 0);
-                ////client.BaseAddress = new Uri(ConfigurationManager.AppSettings[CommonConstants.API_URI]);
-                ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                LoggingHelper.LogDebug("CallAPIGet Sending GET " + client.BaseAddress + url + " == parans = ");
+                LoggingHelper.LogDebug("CallAPIGet Sending GET" + client.BaseAddress + url + " == parans = ");
 
                 //Send request to server
                 var res = client.GetAsync(string.Format(url)).Result;
@@ -182,7 +175,7 @@ namespace RemitanoPrices.Helper
                 //response
                 if (res.IsSuccessStatusCode)
                 {
-                    _result = res.Content.ReadAsStringAsync().Result;
+                    _result = res.Content.ReadAsStringAsync();
                     //SetIntoCache(url, "", _result);
                     LoggingHelper.LogDebug("Res message = " + _result);
                 }

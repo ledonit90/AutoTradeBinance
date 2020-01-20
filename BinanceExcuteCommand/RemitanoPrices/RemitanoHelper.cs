@@ -13,27 +13,25 @@ namespace RemitanoPrices
     {
         CallWebAPI api = new CallWebAPI();
         #region Calculator Price
-        public Offers GetCoinOffers(RequestOffers rq)
+        public async Task<Offers> GetCoinOffersAsync(RequestOffers rq)
         {
             var queryString = ParameterHelper.ObjectToQueryString(rq);
-            var res = api.CallAPIGet(queryString);
+            var res = await api.CallAPIGet(queryString);
 
             if (!string.IsNullOrWhiteSpace(res)) return JsonConvert.DeserializeObject<Offers>(res);
             return null;
         }
 
 
-        public Task<CoinPrice> getCoinPrice(string coin)
+        public async Task<CoinPrice> getCoinSellPrice(string coin)
         {
             RequestOffers rq = new RequestOffers(coin);
             var strRq = ParameterHelper.ObjectToQueryString(rq);
-
+            var strResponse = await api.CallAPIGet(strRq);
+            return JsonConvert.DeserializeObject<CoinPrice>(strResponse);
         }
-
-        public Task<double> AveragePrice()
-        {
-
-        }
+        
+        public async Task<CoinPrice> 
         #endregion
     }
 }
