@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RemitanoPrices.Helper;
 using RemitanoPrices.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using StackExchange.Redis;
 using System.Threading.Tasks;
 
 namespace RemitanoPrices
@@ -12,6 +9,7 @@ namespace RemitanoPrices
     public class RemitanoHelper
     {
         CallWebAPI api = new CallWebAPI();
+        rediscrud recrud = new rediscrud();
         #region Calculator Price
         public async Task<Offers> GetCoinOffersAsync(RequestOffers rq)
         {
@@ -21,17 +19,30 @@ namespace RemitanoPrices
             if (!string.IsNullOrWhiteSpace(res)) return JsonConvert.DeserializeObject<Offers>(res);
             return null;
         }
-
-
-        public async Task<CoinPrice> getCoinSellPrice(string coin)
+        public async Task<CoinPrice> getCoinPrice(string coin,bool isSell)
         {
             RequestOffers rq = new RequestOffers(coin);
+            rq.offer_type = isSell ? "sell" : "buy";
             var strRq = ParameterHelper.ObjectToQueryString(rq);
             var strResponse = await api.CallAPIGet(strRq);
             return JsonConvert.DeserializeObject<CoinPrice>(strResponse);
         }
-        
-        public async Task<CoinPrice> 
+        // Save to Redis Database
+        public async Task PriceOnTime(string coin, int time)
+        {
+            var taskSell = getCoinPrice(coin, true);
+            var taskBuy = getCoinPrice(coin, false);
+            await Task.WhenAll(taskSell, taskBuy);
+            // xu ly ket qua
+
+            // luu vao csdl
+            var strCurMessage1m = JsonConvert.SerializeObject(taskSell.Result);
+            HashEntry[] redisBookHash =
+            {
+                new HashEntry(time, strCurMessage1m)
+            };
+            db.HashSet(keyMessage1mRedis, redisBookHash);
+        }
         #endregion
     }
 }

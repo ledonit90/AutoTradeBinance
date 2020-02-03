@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceExcuteCommand", "BinanceExcuteCommand\BinanceExcuteCommand.csproj", "{76F098B0-66AF-48DA-89E0-08E5FF838902}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricesWs", "PricesWs\PricesWs.csproj", "{C3894962-5C4F-4C24-8EBB-3F9F1B261663}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemitanoPrices", "RemitanoPrices\RemitanoPrices.csproj", "{84C5F711-6959-420E-87B0-2EC67F1583EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceAPI", "PriceAPI\PriceAPI.csproj", "{DECFECBE-ED84-4E7A-8F88-4570A74FBFBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prices.Models", "Prices.Models\Prices.Models.csproj", "{0D3481FD-F825-4582-9855-99E77F3CC506}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prices.WindowServices", "Prices.WindowServices\Prices.WindowServices.csproj", "{6234A0F1-B5DE-497F-B60C-F71E5803C360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DECFECBE-ED84-4E7A-8F88-4570A74FBFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DECFECBE-ED84-4E7A-8F88-4570A74FBFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DECFECBE-ED84-4E7A-8F88-4570A74FBFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DECFECBE-ED84-4E7A-8F88-4570A74FBFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3481FD-F825-4582-9855-99E77F3CC506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3481FD-F825-4582-9855-99E77F3CC506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3481FD-F825-4582-9855-99E77F3CC506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3481FD-F825-4582-9855-99E77F3CC506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6234A0F1-B5DE-497F-B60C-F71E5803C360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6234A0F1-B5DE-497F-B60C-F71E5803C360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6234A0F1-B5DE-497F-B60C-F71E5803C360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6234A0F1-B5DE-497F-B60C-F71E5803C360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
