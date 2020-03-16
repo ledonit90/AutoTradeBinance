@@ -233,13 +233,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Remibit.Models\Remibit.Models.csproj">
+      <Project>{ef24dec4-0de2-43d7-a4dc-616ff2541a9d}</Project>
+      <Name>Remibit.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Remibit.Utility\Remibit.Utility.csproj">
       <Project>{362c68aa-02f0-4d1f-a79e-3c0e31cb7b65}</Project>
       <Name>Remibit.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RemibitPrices.Models\Remibit.Models.csproj">
-      <Project>{ef24dec4-0de2-43d7-a4dc-616ff2541a9d}</Project>
-      <Name>Remibit.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
