@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceExcuteCommand", "BinanceExcuteCommand\BinanceExcuteCommand.csproj", "{76F098B0-66AF-48DA-89E0-08E5FF838902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binance.Helper", "BinanceLibAPI\Binance.Helper.csproj", "{940596C2-6C31-4B45-B475-7D2E6F0322AA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricesWs", "PricesWs\PricesWs.csproj", "{C3894962-5C4F-4C24-8EBB-3F9F1B261663}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remitano.Helper", "RemitanoPrices\Remitano.Helper.csproj", "{84C5F711-6959-420E-87B0-2EC67F1583EF}"
@@ -21,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remibit.Utility", "Remibit.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExchangePlatformHelper", "ExchangePlatformHelper", "{826055F5-E99F-45DE-B752-99F337EAC74E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binances.Helper", "Binances.Helper\Binances.Helper.csproj", "{940596C2-6C31-4B45-B475-7D2E6F0322AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +31,6 @@ Global
 		{76F098B0-66AF-48DA-89E0-08E5FF838902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76F098B0-66AF-48DA-89E0-08E5FF838902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76F098B0-66AF-48DA-89E0-08E5FF838902}.Release|Any CPU.Build.0 = Release|Any CPU
-		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3894962-5C4F-4C24-8EBB-3F9F1B261663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3894962-5C4F-4C24-8EBB-3F9F1B261663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3894962-5C4F-4C24-8EBB-3F9F1B261663}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,13 +55,17 @@ Global
 		{362C68AA-02F0-4D1F-A79E-3C0E31CB7B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362C68AA-02F0-4D1F-A79E-3C0E31CB7B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362C68AA-02F0-4D1F-A79E-3C0E31CB7B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{940596C2-6C31-4B45-B475-7D2E6F0322AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{940596C2-6C31-4B45-B475-7D2E6F0322AA} = {826055F5-E99F-45DE-B752-99F337EAC74E}
 		{84C5F711-6959-420E-87B0-2EC67F1583EF} = {826055F5-E99F-45DE-B752-99F337EAC74E}
+		{940596C2-6C31-4B45-B475-7D2E6F0322AA} = {826055F5-E99F-45DE-B752-99F337EAC74E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA5E28C2-1FD2-49A3-BA03-2F1BD4A80C10}

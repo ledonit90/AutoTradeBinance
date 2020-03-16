@@ -58,13 +58,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BinanceLibAPI\Binance.Helper.csproj">
-      <Project>{940596c2-6c31-4b45-b475-7d2e6f0322aa}</Project>
-      <Name>Binance.Helper</Name>
-    </ProjectReference>
+    <Content Include="text.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="text.txt" />
+    <ProjectReference Include="..\Binances.Helper\Binances.Helper.csproj">
+      <Project>{940596c2-6c31-4b45-b475-7d2e6f0322aa}</Project>
+      <Name>Binances.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
