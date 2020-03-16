@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceExcuteCommand", "BinanceExcuteCommand\BinanceExcuteCommand.csproj", "{76F098B0-66AF-48DA-89E0-08E5FF838902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceLibAPI", "BinanceLibAPI\BinanceLibAPI.csproj", "{940596C2-6C31-4B45-B475-7D2E6F0322AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binance.Helper", "BinanceLibAPI\Binance.Helper.csproj", "{940596C2-6C31-4B45-B475-7D2E6F0322AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricesWs", "PricesWs\PricesWs.csproj", "{C3894962-5C4F-4C24-8EBB-3F9F1B261663}"
 EndProject

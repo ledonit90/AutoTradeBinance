@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI.Exceptions
+namespace Binances.Helper.Exceptions
 {
     public class WebsocketBadInputException : WebsocketException
     {

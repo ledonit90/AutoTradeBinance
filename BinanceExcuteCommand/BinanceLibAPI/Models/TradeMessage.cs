@@ -1,4 +1,4 @@
-﻿namespace BinanceLibAPI.Models
+﻿namespace Binances.Helper.Models
 {
     public class StreamMessage
     {

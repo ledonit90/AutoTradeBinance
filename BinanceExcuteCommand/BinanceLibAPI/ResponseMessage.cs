@@ -5,7 +5,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI
+namespace Binances.Helper
 {
     /// <summary>
     /// Received message, could be Text or Binary

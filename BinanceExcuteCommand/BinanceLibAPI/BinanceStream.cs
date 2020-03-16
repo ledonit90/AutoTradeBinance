@@ -1,5 +1,5 @@
-﻿using BinanceLibAPI.Models;
-using BinanceLibAPI.RabbitMQ;
+﻿using Binances.Helper.Models;
+using Binances.Helper.RabbitMQ;
 using Newtonsoft.Json;
 using System;
 using System.Net.WebSockets;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI
+namespace Binances.Helper
 {
     public class BinanceStream
     {

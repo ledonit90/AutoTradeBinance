@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Net.Http;
-using BinanceLibAPI.Models;
+using Binances.Helper.Models;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace BinanceLibAPI
+namespace Binances.Helper
 {
     public class Binance
     {

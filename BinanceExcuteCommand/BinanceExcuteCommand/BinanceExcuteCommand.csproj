@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BinanceLibAPI\BinanceLibAPI.csproj">
+    <ProjectReference Include="..\BinanceLibAPI\Binance.Helper.csproj">
       <Project>{940596c2-6c31-4b45-b475-7d2e6f0322aa}</Project>
-      <Name>BinanceLibAPI</Name>
+      <Name>Binance.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

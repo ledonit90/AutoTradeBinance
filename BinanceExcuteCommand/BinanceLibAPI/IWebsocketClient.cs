@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI
+namespace Binances.Helper
 {
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling

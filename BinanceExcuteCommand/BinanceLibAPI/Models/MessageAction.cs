@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI.Models
+namespace Binances.Helper.Models
 {
     public class MessageAction
     {

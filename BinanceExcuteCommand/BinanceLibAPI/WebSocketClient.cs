@@ -2,7 +2,7 @@
 using System.Net.WebSockets;
 using System.Threading;
 
-namespace BinanceLibAPI
+namespace Binances.Helper
 {
     /// <summary>
     /// A simple websocket client with built-in reconnection and error handling

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BinanceLibAPI.RabbitMQ
+namespace Binances.Helper.RabbitMQ
 {
     public class RabbitmqConfiguration
     {

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Remibit.Models\Remibit.Models.csproj" />
+    <ProjectReference Include="..\RemibitPrices.Models\Remibit.Models.csproj" />
     <ProjectReference Include="..\Remibit.Utility\Remibit.Utility.csproj" />
   </ItemGroup>
 

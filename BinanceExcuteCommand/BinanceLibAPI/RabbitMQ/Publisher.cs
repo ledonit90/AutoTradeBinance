@@ -1,4 +1,4 @@
-﻿using BinanceLibAPI.Models;
+﻿using Binances.Helper.Models;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RabbitMQ.Client.Events;
 
-namespace BinanceLibAPI.RabbitMQ
+namespace Binances.Helper.RabbitMQ
 {
     public class Publisher
     {
