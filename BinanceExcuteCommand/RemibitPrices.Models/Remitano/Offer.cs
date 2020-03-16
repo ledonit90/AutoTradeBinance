@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Prices.Models.Models.Remitano
+namespace Remibit.Models.Remitano
 {
     public class Offer
     {

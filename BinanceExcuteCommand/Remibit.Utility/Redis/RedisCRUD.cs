@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
-using RemitanoPrices.Models;
 using StackExchange.Redis;
 using System.Threading.Tasks;
-namespace RedisProcessing
+using Remibit.Models.Remitano;
+
+namespace Remibit.Utility.Redis
 {
-    public class RedisCRUD
+    public class RedisHelper
     {
         private IDatabaseAsync db; 
-        public RedisCRUD()
+        public RedisHelper()
         {
             db = RedisConnectorHelper.RedisCache(3);
         }

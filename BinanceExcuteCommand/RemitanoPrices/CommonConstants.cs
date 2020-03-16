@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RemitanoPrices
+namespace Remitano.Helper
 {
     public class CommonConstants
     {

@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RemitanoPrices.Helper
+namespace Remitano.Helper.Helper
 {
     public class ResponseData
     {
@@ -42,23 +42,7 @@ namespace RemitanoPrices.Helper
 
         private void Init()
         {
-            //_cachedURLs.Add("Account_GetPersonCommonInfo_", 4 * 60);
-            //_cachedURLs.Add("Account_GetPersonCommonInfo",  4 * 60);
-            //_cachedURLs.Add("Employee_GetProfile",          4 * 60);
-            //_cachedURLs.Add("Employee_CurriculumVitae",     4 * 60);
-
-            //_cachedURLs.Add("Account_GetAvatar", 24 * 60);
-            ////_cachedURLs.Add("HomePage_GetLeftMenu", 24 * 60);
-            //_cachedURLs.Add("HomePage_GetHomePageInfo", 24 * 60);
-            //_cachedURLs.Add("Employee_GetProfile", 24 * 60);
-            //_cachedURLs.Add("Employee_CurriculumVitae", 24 * 60);
-            ////_cachedURLs.Add("Employee_GetProfileList", 24 * 60);
-            //_cachedURLs.Add("Employee_GetAbsenceCommonInfo", 24 * 60);
-            //_cachedURLs.Add("Employee_GetOverTimeInfo", 24 * 60);
-            //_cachedURLs.Add("Employee_GetCTDTInfo", 24 * 60);
-            //_cachedURLs.Add("Employee_GetInfoBaKyCongTruoc", 24 * 60);
-            //_cachedURLs.Add("Employee_ProfileListViewMemberProfile", 24 * 60);
-            //_cachedURLs.Add("Employee_ProfileListCurriculumVitaeByPerNo", 24 * 60);
+            
         }
 
         private string RemoveSpecialCharacters(string str)

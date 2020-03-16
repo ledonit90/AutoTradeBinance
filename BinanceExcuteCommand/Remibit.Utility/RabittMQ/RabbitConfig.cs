@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RemitanoPrices.RabittMQ
+﻿namespace Remibit.Utility.RabittMQ
 {
     public class RabbitConfig
     {

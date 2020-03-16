@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
-using Pricesws.Models;
+using Remibit.Models.SupportObj;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 namespace Pricesws.RabittMQ

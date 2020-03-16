@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
-using Pricesws.Models;
+using Remibit.Models.SupportObj;
 
 namespace Pricesws.RabittMQ
 {

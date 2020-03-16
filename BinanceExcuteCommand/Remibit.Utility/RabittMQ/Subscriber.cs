@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
-using RemitanoPrices.Models;
+using Remibit.Models.SupportObj;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-namespace RemitanoPrices.RabittMQ
+namespace Remibit.Utility.RabittMQ
 {
     public class Subscriber
     {
@@ -67,7 +67,6 @@ namespace RemitanoPrices.RabittMQ
             consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume(queue: QueueName,
-                                 autoAck: true,
                                  consumer: consumer);
         }
 

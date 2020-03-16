@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using RemitanoPrices.RabittMQ;
+using Remibit.Utility.RabittMQ;
 
-namespace RemitanoPrices.Helper
+namespace Remitano.Helper.Helper
 {
     public class LoggingHelper
     {

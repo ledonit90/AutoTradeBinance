@@ -1,7 +1,7 @@
 ﻿using StackExchange.Redis;
 using System;
 
-namespace RedisProcessing
+namespace Remibit.Utility.Redis
 {
     public class RedisConnectorHelper
     {

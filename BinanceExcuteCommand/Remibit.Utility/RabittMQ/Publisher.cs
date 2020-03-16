@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RemitanoPrices.RabittMQ
+namespace Remibit.Utility.RabittMQ
 {
     public class Publisher
     {
@@ -56,7 +56,6 @@ namespace RemitanoPrices.RabittMQ
             };
 
             _channel.BasicConsume(queue: "message" + queueName,
-                                 autoAck: true,
                                  consumer: consumer);
         }
 

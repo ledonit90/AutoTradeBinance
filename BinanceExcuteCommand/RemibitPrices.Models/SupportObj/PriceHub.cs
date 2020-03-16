@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Pricesws.Models
+namespace Remibit.Models.SupportObj
 {
     public class PriceHub : Hub<IPriceHub>
     {

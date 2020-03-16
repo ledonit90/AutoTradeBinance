@@ -1,16 +1,20 @@
 ﻿using Newtonsoft.Json;
-using RemitanoPrices.Helper;
-using RemitanoPrices.Models;
+using Remitano.Helper.Helper;
 using StackExchange.Redis;
 using System.Threading.Tasks;
+using Remibit.Models.Remitano;
 
-namespace RemitanoPrices
+namespace Remibit.Utility.Redis
 {
     public class RemitanoHelper
     {
         CallWebAPI api = new CallWebAPI();
-        rediscrud recrud = new rediscrud();
+        private IDatabase db;
         #region Calculator Price
+        public RemitanoHelper()
+        {
+            db = RedisConnectorHelper.RedisCache(2);
+        }
         public async Task<Offers> GetCoinOffersAsync(RequestOffers rq)
         {
             var queryString = ParameterHelper.ObjectToQueryString(rq);
@@ -41,7 +45,7 @@ namespace RemitanoPrices
             {
                 new HashEntry(time, strCurMessage1m)
             };
-            db.HashSet(keyMessage1mRedis, redisBookHash);
+            db.HashSet(time.ToString(), redisBookHash);
         }
         #endregion
     }
