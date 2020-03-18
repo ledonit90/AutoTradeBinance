@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Remitano.Helper.Helper
+namespace Remibit.Utility.Helper
 {
     public class ConstantVarURL
     {

@@ -40,9 +40,6 @@
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Protocols">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.identitymodel.protocols\5.3.0\lib\netstandard2.0\Microsoft.IdentityModel.Protocols.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -80,10 +77,6 @@
     <Compile Include="Models\RequestParameter.cs" />
     <Compile Include="Models\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RabbitMQ\Publisher.cs" />
-    <Compile Include="RabbitMQ\RabbitmqConfiguration.cs" />
-    <Compile Include="RabbitMQ\RabbitMQHelper.cs" />
-    <Compile Include="RabbitMQ\Subscriber.cs" />
     <Compile Include="ReconnectionType.cs" />
     <Compile Include="ResponseMessage.cs" />
     <Compile Include="Validations\Validations.cs" />
@@ -95,6 +88,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Remibit.Models\Remibit.Models.csproj">
+      <Project>{ef24dec4-0de2-43d7-a4dc-616ff2541a9d}</Project>
+      <Name>Remibit.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Remibit.Utility\Remibit.Utility.csproj">
+      <Project>{362c68aa-02f0-4d1f-a79e-3c0e31cb7b65}</Project>
+      <Name>Remibit.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

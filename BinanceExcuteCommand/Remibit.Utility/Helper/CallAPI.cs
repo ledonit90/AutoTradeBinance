@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Remitano.Helper.Helper
+namespace Remibit.Utility.Helper
 {
     public class ResponseData
     {

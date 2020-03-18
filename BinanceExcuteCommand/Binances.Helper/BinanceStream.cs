@@ -1,5 +1,5 @@
 ﻿using Binances.Helper.Models;
-using Binances.Helper.RabbitMQ;
+using Remibit.Utility.RabitMQ;
 using Newtonsoft.Json;
 using System;
 using System.Net.WebSockets;
@@ -22,7 +22,7 @@ namespace Binances.Helper
 
         public async Task getDataStream()
         {
-            Publisher test = new Publisher("34.221.95.44", 5672, "getData", "usdtbtc");
+            Publisher test = new Publisher("getData", "usdtbtc");
             using (ClientWebSocket ws = new ClientWebSocket())
             {
                 Uri serverUri = new Uri(this.hostUri);

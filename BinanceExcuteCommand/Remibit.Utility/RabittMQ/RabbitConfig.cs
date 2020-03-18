@@ -1,4 +1,9 @@
-﻿namespace Remibit.Utility.RabittMQ
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Remibit.Utility.RabitMQ
 {
     public class RabbitConfig
     {

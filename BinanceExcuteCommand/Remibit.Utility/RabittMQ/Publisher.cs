@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Remibit.Utility.RabittMQ
+namespace Remibit.Utility.RabitMQ
 {
     public class Publisher
     {
@@ -23,7 +23,7 @@ namespace Remibit.Utility.RabittMQ
                 this.queueName = queueName;
                 this.exchangeName = exchangeName;
                 messageActionQueueName = "message" + queueName;
-                _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST };
+                _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST, UserName = "muabanaltcoinnhe", Password = "Levandon_90" };
                 _conn = _cf.CreateConnection();
                 _channel = _conn.CreateModel();
                 _channel.ExchangeDeclare(exchange: exchangeName, type: "topic");
@@ -56,6 +56,7 @@ namespace Remibit.Utility.RabittMQ
             };
 
             _channel.BasicConsume(queue: "message" + queueName,
+                                 autoAck: true,
                                  consumer: consumer);
         }
 

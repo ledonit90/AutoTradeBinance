@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using Remibit.Models.SupportObj;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-namespace Remibit.Utility.RabittMQ
+namespace Remibit.Utility.RabitMQ
 {
     public class Subscriber
     {
@@ -67,6 +67,7 @@ namespace Remibit.Utility.RabittMQ
             consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
             _channel.BasicConsume(queue: QueueName,
+                                 autoAck: true,
                                  consumer: consumer);
         }
 
