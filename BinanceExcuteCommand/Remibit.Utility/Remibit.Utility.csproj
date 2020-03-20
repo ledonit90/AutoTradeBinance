@@ -182,10 +182,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AppConstConfig.cs" />
     <Compile Include="Helper\CallAPI.cs" />
     <Compile Include="Helper\ConstantVarURL.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\FileNFolderUtil.cs" />
+    <Compile Include="Helper\HttpRequestHelper.cs" />
     <Compile Include="Helper\LoggingHelper.cs" />
     <Compile Include="Helper\ParameterHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

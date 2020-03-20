@@ -24,23 +24,21 @@ namespace Remibit.Utility.Helper
     {
         //private static string ApiUrlAppSetting = "API_URI";
 
-        public string _accessToken { set; get; }
-        public string _currentUserId { set; get; }
+        public string  lsHeader { set; get; }
+        public string password { set; get; }
+        public string username { set; get; }
 
         private Dictionary<string, int> _cachedURLs = new Dictionary<string, int>();
 
         public CallWebAPI(string accessToken)
         {
-            this._accessToken = accessToken;
-            Init();
         }
 
         public CallWebAPI()
         {
-            Init();
         }
 
-        private void Init()
+        private void Builder()
         {
             
         }
@@ -74,7 +72,7 @@ namespace Remibit.Utility.Helper
             return null;
         }
 
-        public string CallAPI(string url, JObject JObj)
+        public async Task<string> CallAPIAsync(string url, JObject JObj)
         {
             // Check cache
             string retVal = "";
@@ -87,6 +85,7 @@ namespace Remibit.Utility.Helper
             //}
 
             HttpClient client = new HttpClient();
+            
             //client.BaseAddress = new Uri(ConstantVarURL.BASEURL);
             ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -95,7 +94,7 @@ namespace Remibit.Utility.Helper
             HttpContent content = CreateHttpContent(JObj);
             try
             {
-                var res = client.PostAsync(string.Format(url), content).Result;
+                var res = await client.PostAsync(string.Format(url), content);
                 //response
                 if (res.IsSuccessStatusCode)
                 {

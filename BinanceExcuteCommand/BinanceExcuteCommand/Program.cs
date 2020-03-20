@@ -1,5 +1,5 @@
 ﻿using System;
-using Binances.Helper;
+using Remibit.Utility.Helper;
 
 namespace BinanceExcuteCommand
 {
@@ -16,14 +16,18 @@ namespace BinanceExcuteCommand
             //reRQ.quantity = 0.03;
             //reRQ.recvWindow = 5000;
             //reRQ.timeInForce = "GTC";
-            Binance binance = new Binance(ApiKey, ApiSecretKey);
-            //var m = binance.getDepositeAddressAsync();
-            //m.Wait();
-            BinanceStream stream = new BinanceStream();
+            //Binance binance = new Binance(ApiKey, ApiSecretKey);
+            ////var m = binance.getDepositeAddressAsync();
+            ////m.Wait();
+            //BinanceStream stream = new BinanceStream();
 
-            var xxx = stream.getDataStream();
-            xxx.Wait();
-            Console.WriteLine("thanh cong is " + xxx.Status);
+            //var xxx = stream.getDataStream();
+            //xxx.Wait();
+            // test getset API
+            CallWebAPI api = new CallWebAPI();
+            
+            api.CallAPIGet(ConstantVarURL.REMI_API_BTC );
+            Console.WriteLine("thanh cong is ");
             Console.ReadLine();
         }
     }
