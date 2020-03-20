@@ -1,31 +1,29 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
-using RabbitMQ.Client.Events;
-using Remibit.Models.
 
-namespace Remibit.Utility.RabbitMQ
+namespace Remibit.Utility.RabitMQ
 {
     public class Publisher
     {
         private ConnectionFactory _cf;
         private IConnection _conn;
         private IModel _channel;
-        private IModel _Messagechannel;
         private string messageActionQueueName;
         private string queueName;
         private string exchangeName;
 
-        public Publisher(string hostname, int port, string exchangeName, string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
+        public Publisher(string exchangeName = RabbitConfig.EXCHANGENAME, string queueName = RabbitConfig.QUEUENAME, bool durable = true, bool exclusive = false, bool autoDelete = false, string hostname = RabbitConfig.HOST, int port = RabbitConfig.Port, IDictionary<string, object> arguments = null)
         {
             try
             {
                 this.queueName = queueName;
                 this.exchangeName = exchangeName;
-                //messageActionQueueName = "message" + queueName;
-                _cf = new ConnectionFactory() { HostName = hostname, Port = port,  UserName = "muabanaltcoinnhe", Password = "Levandon_90" };
+                messageActionQueueName = "message" + queueName;
+                _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST, UserName = "muabanaltcoinnhe", Password = "Levandon_90" };
                 _conn = _cf.CreateConnection();
                 _channel = _conn.CreateModel();
                 _channel.ExchangeDeclare(exchange: exchangeName, type: "topic");
@@ -35,11 +33,11 @@ namespace Remibit.Utility.RabbitMQ
                                      autoDelete: autoDelete,
                                      arguments: arguments);
 
-                //_channel.QueueBind(queue: messageActionQueueName,
-                //              exchange: exchangeName,
-                //              routingKey: messageActionQueueName);
+                _channel.QueueBind(queue: messageActionQueueName,
+                              exchange: exchangeName,
+                              routingKey: messageActionQueueName);
 
-                //ReceiveMessageAction();
+                ReceiveMessageAction();
             }
             catch (Exception ex)
             {
@@ -71,10 +69,9 @@ namespace Remibit.Utility.RabbitMQ
         {
             try
             {
-                StreamMessage streamMessage = JsonConvert.DeserializeObject<StreamMessage>(message);
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(streamMessage.data.p));
-                _channel.BasicPublish(exchange : exchangeName,
-                                     routingKey : queueName,
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+                _channel.BasicPublish(exchange: exchangeName,
+                                     routingKey: queueName,
                                      basicProperties: null,
                                      body: body);
             }
@@ -82,6 +79,22 @@ namespace Remibit.Utility.RabbitMQ
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public void PublishMessage(string message)
+        {
+                _channel.QueueDeclare(queue: queueName,
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                var body = Encoding.UTF8.GetBytes(message);
+
+                _channel.BasicPublish(exchange: "",
+                                     routingKey: queueName,
+                                     basicProperties: null,
+                                     body: body);
         }
     }
 }

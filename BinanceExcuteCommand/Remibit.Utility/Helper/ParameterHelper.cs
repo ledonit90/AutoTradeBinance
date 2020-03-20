@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web;
 
-namespace Remitano.Helper.Helper
+namespace Remibit.Utility.Helper
 {
     public class ParameterHelper
     {

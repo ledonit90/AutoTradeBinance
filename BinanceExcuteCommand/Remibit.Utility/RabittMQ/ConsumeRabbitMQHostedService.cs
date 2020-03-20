@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Remibit.Models.SupportObj;
 
-namespace Pricesws.RabittMQ
+namespace Remibit.Utility.RabitMQ
 {
     public class ConsumeRabbitMQHostedService : BackgroundService
     {
