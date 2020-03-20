@@ -1,37 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.SignalR;
-using Remibit.Models.SupportObj;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-namespace Remibit.Utility.RabittMQ
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Remibit.Utility.RabbitMQ
 {
     public class Subscriber
     {
         private ConnectionFactory _cf;
         private IConnection _conn;
         private IModel _channel;
-        private IHubContext<PriceHub, IPriceHub> _priceHub;
+        private string queueName;
+        private string exchangeName;
 
-        public string QueueName { get ; set ; }
-        public string ExchangeName { get; set ; }
-        public bool durable { get; set ; } = true;
-        public bool exclusive { get; set ; } = false;
-        public bool autoDelete { get; set; } = false;
-        public IDictionary<string, object> arguments { get; set; } = null;
-
-        public Subscriber(IHubContext<PriceHub, IPriceHub> pricehub)
+        public Subscriber(string hostname, int port, string exchangeName, string queueName, bool durable = false, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
         {
-            _priceHub = pricehub;
-        }
-
-        public void getStartedUse()
-        {
-            _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST, Port = RabbitConfig.Port, UserName = RabbitConfig.UserName, Password = RabbitConfig.Password };
+            this.queueName = queueName;
+            this.exchangeName = exchangeName;
+            _cf = new ConnectionFactory() { HostName = hostname, Port = port };
             _conn = _cf.CreateConnection();
-            _channel = _conn.CreateModel();
-            _channel.ExchangeDeclare(exchange: ExchangeName, type: "topic");
-            _channel.QueueDeclare(queue: QueueName,
+
+            _channel.QueueDeclare(queue: queueName,
                                  durable: durable,
                                  exclusive: exclusive,
                                  autoDelete: autoDelete,
@@ -43,37 +35,23 @@ namespace Remibit.Utility.RabittMQ
             return _conn.CreateModel();
         }
 
-        public void CloseChannel()
+        public void CloseChannel(IModel channel)
         {
-            this._channel.Close();
-            this._conn.Close();
+            channel.Close();
         }
 
         public void SubcribeAChannel()
         {
             var consumer = new EventingBasicConsumer(_channel);
-
-            consumer.Received += async (model, ea) =>
+            consumer.Received += (model, ea) =>
             {
-                // Use SignalR send message
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
-                await _priceHub.Clients.All.SendMessageAsync(message);
+                Console.WriteLine(" [x] Received {0}", message);
             };
-
-            consumer.Shutdown += OnConsumerShutdown;
-            consumer.Registered += OnConsumerRegistered;
-            consumer.Unregistered += OnConsumerUnregistered;
-            consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
-
-            _channel.BasicConsume(queue: QueueName,
+            _channel.BasicConsume(queue: queueName,
+                                 autoAck: true,
                                  consumer: consumer);
         }
-
-        private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }
-        private void OnConsumerUnregistered(object sender, ConsumerEventArgs e) { }
-        private void OnConsumerRegistered(object sender, ConsumerEventArgs e) { }
-        private void OnConsumerShutdown(object sender, ShutdownEventArgs e) { }
-        private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e) { }
     }
 }

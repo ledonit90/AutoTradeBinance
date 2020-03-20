@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using RabbitMQ.Client;
 
-namespace Binances.Helper.RabbitMQ
+namespace Remibit.Utility.RabbitMQ
 {
     public class RabbitMQHelper
     {

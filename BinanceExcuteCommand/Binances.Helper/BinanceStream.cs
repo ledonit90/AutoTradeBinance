@@ -1,6 +1,4 @@
-﻿using Binances.Helper.Models;
-using Binances.Helper.RabbitMQ;
-using Newtonsoft.Json;
+﻿using Remibit.Utility.RabbitMQ;
 using System;
 using System.Net.WebSockets;
 using System.Text;

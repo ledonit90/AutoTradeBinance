@@ -1,4 +1,4 @@
-﻿namespace Binances.Helper.Models
+﻿namespace Remibit.Models
 {
     public class StreamMessage
     {

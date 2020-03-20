@@ -167,6 +167,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binance\AccountInfo.cs" />
+    <Compile Include="Binance\DepositeAddressResponse.cs" />
+    <Compile Include="Binance\ExchangeInfo.cs" />
+    <Compile Include="Binance\ExchangeInfoQuickTypes.cs" />
+    <Compile Include="Binance\LinkConfig.cs" />
+    <Compile Include="Binance\MessageAction.cs" />
+    <Compile Include="Binance\RequestParameter.cs" />
+    <Compile Include="Binance\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Remitano\CoinPrices.cs" />
     <Compile Include="Remitano\Offer.cs" />

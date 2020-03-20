@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Binances.Helper.RabbitMQ
+namespace Remibit.Models
 {
-    public class RabbitmqConfiguration
+    public class MessageAction
     {
-        public const string HOST = "localhost";
     }
 }

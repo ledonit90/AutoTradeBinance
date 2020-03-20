@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Binances.Helper.Models
+namespace Remibit.Models.Binance
 {
     public class RateLimit
     {

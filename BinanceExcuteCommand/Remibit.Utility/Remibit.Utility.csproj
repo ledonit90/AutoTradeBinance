@@ -185,6 +185,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabittMQ\Publisher.cs" />
     <Compile Include="RabittMQ\RabbitConfig.cs" />
+    <Compile Include="RabittMQ\RabbitmqConfiguration.cs" />
+    <Compile Include="RabittMQ\RabbitMQHelper.cs" />
     <Compile Include="RabittMQ\Subscriber.cs" />
     <Compile Include="Redis\RedisConnectorHelper.cs" />
     <Compile Include="Redis\RedisCRUD.cs" />
