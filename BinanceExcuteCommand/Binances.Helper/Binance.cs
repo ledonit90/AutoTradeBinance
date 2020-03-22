@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Binances.Helper.Models;
 using Newtonsoft.Json;
-using System.Linq;
+using Remibit.Models.Binance;
 
 namespace Binances.Helper
 {

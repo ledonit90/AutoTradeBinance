@@ -1,4 +1,4 @@
-﻿namespace Remibit.Models
+﻿namespace Remibit.Models.Binance
 {
     public class StreamMessage
     {

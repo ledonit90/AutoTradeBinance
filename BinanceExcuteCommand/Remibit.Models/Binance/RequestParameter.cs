@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Remibit.Models
+namespace Remibit.Models.Binance
 {
     public class RequestParameter
     {

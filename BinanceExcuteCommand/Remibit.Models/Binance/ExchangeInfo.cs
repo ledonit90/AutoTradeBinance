@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Remibit.Models.Binance
 {
-    public class RateLimit
+    public partial class RateLimit
     {
         public string rateLimitType { get; set; }
         public string interval { get; set; }
@@ -14,7 +14,7 @@ namespace Remibit.Models.Binance
         public int limit { get; set; }
     }
 
-    public class Filter
+    public partial class Filter
     {
         public string filterType { get; set; }
         public string minPrice { get; set; }
@@ -32,7 +32,7 @@ namespace Remibit.Models.Binance
         public int? maxNumAlgoOrders { get; set; }
     }
 
-    public class Symbol
+    public partial class Symbol
     {
         public string symbol { get; set; }
         public string status { get; set; }
@@ -47,7 +47,7 @@ namespace Remibit.Models.Binance
         public List<Filter> filters { get; set; }
     }
 
-    public class ExchangeInfo
+    public partial class ExchangeInfo
     {
         public string timezone { get; set; }
         public long serverTime { get; set; }

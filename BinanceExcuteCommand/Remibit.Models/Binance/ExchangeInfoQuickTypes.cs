@@ -3,7 +3,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Remibit.Binance.Models
+namespace Remibit.Models.Binance
 {
     public partial class ExchangeInfoQuickTypes
     {
@@ -129,12 +129,12 @@ namespace Remibit.Binance.Models
 
     public partial class ExchangeInfoQuickTypes
     {
-        public static ExchangeInfoQuickTypes FromJson(string json) => JsonConvert.DeserializeObject<ExchangeInfoQuickTypes>(json, Remibit.Converter.Settings);
+        public static ExchangeInfoQuickTypes FromJson(string json) => JsonConvert.DeserializeObject<ExchangeInfoQuickTypes>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this ExchangeInfoQuickTypes self) => JsonConvert.SerializeObject(self, Remibit.Converter.Settings);
+        public static string ToJson(this ExchangeInfoQuickTypes self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter
