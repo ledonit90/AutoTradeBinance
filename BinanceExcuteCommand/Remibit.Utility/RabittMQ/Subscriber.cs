@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.SignalR;
 using Remibit.Models.SupportObj;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Remibit.Utility.Common;
+
 namespace Remibit.Utility.RabitMQ
 {
     public class Subscriber
@@ -27,7 +29,7 @@ namespace Remibit.Utility.RabitMQ
 
         public void getStartedUse()
         {
-            _cf = new ConnectionFactory() { HostName = RabbitConfig.HOST, Port = RabbitConfig.Port, UserName = RabbitConfig.UserName, Password = RabbitConfig.Password };
+            _cf = new ConnectionFactory() { HostName = AppConstConfig.RABBITMQ_IP, Port = AppConstConfig.RABBIT_PORT, UserName = AppConstConfig.RABBITMQ_USERNAME, Password = AppConstConfig.RABBITMQ_PASSWORD };
             _conn = _cf.CreateConnection();
             _channel = _conn.CreateModel();
             _channel.ExchangeDeclare(exchange: ExchangeName, type: "topic");

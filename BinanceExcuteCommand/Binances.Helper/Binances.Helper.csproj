@@ -62,18 +62,12 @@
   <ItemGroup>
     <Compile Include="AutoBuyBNB.cs" />
     <Compile Include="BinanceStream.cs" />
-    <Compile Include="DisconnectionType.cs" />
     <Compile Include="Exceptions\WebsocketBadInputException.cs" />
     <Compile Include="Exceptions\WebsocketException.cs" />
-    <Compile Include="IWebsocketClient.cs" />
     <Compile Include="Binance.cs" />
     <Compile Include="HashHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReconnectionType.cs" />
-    <Compile Include="ResponseMessage.cs" />
     <Compile Include="Validations\Validations.cs" />
-    <Compile Include="WebSocketClient.cs" />
-    <Compile Include="WebSocketException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

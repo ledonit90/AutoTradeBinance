@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Remibit.Utility.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;

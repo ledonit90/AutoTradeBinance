@@ -8,6 +8,6 @@ namespace Remibit.Utility.RabbitMQ
 {
     public class RabbitmqConfiguration
     {
-        public const string HOST = "localhost";
+        public const string HOST = "34.221.95.44";
     }
 }

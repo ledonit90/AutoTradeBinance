@@ -1,5 +1,5 @@
 ﻿using System;
-using Remibit.Utility.Helper;
+using Binances.Helper;
 
 namespace BinanceExcuteCommand
 {
@@ -7,8 +7,6 @@ namespace BinanceExcuteCommand
     {
         static void Main(string[] args)
         {
-            const string ApiKey = "m6I3N7jxf6gTrPxEDTG3RnTbn5uDemTCu6Ge7AWRFkFbJEvjw0Pi8ZZRhCl9vl91";
-            const string ApiSecretKey = "HAimeHvPpeqzgFebEUwcpMQy4QYY82Wef4u0rHNIFXNo1lXz8y8ig204dpXYnVtE";
             //RequestParameter reRQ = new RequestParameter();
             //reRQ.symbol = "BTCUSDT";
             //reRQ.type = "LIMIT";
@@ -19,14 +17,14 @@ namespace BinanceExcuteCommand
             //Binance binance = new Binance(ApiKey, ApiSecretKey);
             ////var m = binance.getDepositeAddressAsync();
             ////m.Wait();
-            //BinanceStream stream = new BinanceStream();
+            BinanceStream stream = new BinanceStream();
 
-            //var xxx = stream.getDataStream();
-            //xxx.Wait();
+            var xxx = stream.getDataStream();
+            xxx.Wait();
             // test getset API
-            CallWebAPI api = new CallWebAPI();
-            
-            api.CallAPIGet(ConstantVarURL.REMI_API_BTC );
+            //CallWebAPI api = new CallWebAPI();
+
+            //api.CallAPIGet(ConstantVarURL.REMI_API_BTC );
             Console.WriteLine("thanh cong is ");
             Console.ReadLine();
         }

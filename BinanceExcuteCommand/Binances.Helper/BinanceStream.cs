@@ -1,4 +1,5 @@
-﻿using Remibit.Utility.RabitMQ;
+﻿using Remibit.Utility.Common;
+using Remibit.Utility.RabitMQ;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -20,7 +21,7 @@ namespace Binances.Helper
 
         public async Task getDataStream()
         {
-            Publisher test = new Publisher("getData", "usdtbtc");
+            Publisher test = new Publisher(AppConstConfig.PRICE_QEXCHANGE, AppConstConfig.PRICE_QNAME);
             using (ClientWebSocket ws = new ClientWebSocket())
             {
                 Uri serverUri = new Uri(this.hostUri);
