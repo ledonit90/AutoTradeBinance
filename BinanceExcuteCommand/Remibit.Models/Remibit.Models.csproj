@@ -176,6 +176,7 @@
     <Compile Include="Binance\RequestParameter.cs" />
     <Compile Include="Binance\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemibitRedisConfig.cs" />
     <Compile Include="Remitano\CoinPrices.cs" />
     <Compile Include="Remitano\Offer.cs" />
     <Compile Include="Remitano\REMI_RATE.cs" />

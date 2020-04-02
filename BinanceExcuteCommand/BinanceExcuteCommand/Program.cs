@@ -1,11 +1,13 @@
 ﻿using System;
-using Binances.Helper;
+using Remibit.Utility.Helper;
+using Remibit.Models.Remitano;
+using System.Threading.Tasks;
 
 namespace BinanceExcuteCommand
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //RequestParameter reRQ = new RequestParameter();
             //reRQ.symbol = "BTCUSDT";
@@ -17,12 +19,15 @@ namespace BinanceExcuteCommand
             //Binance binance = new Binance(ApiKey, ApiSecretKey);
             ////var m = binance.getDepositeAddressAsync();
             ////m.Wait();
-            BinanceStream stream = new BinanceStream();
+            //BinanceStream stream = new BinanceStream();
 
-            var xxx = stream.getDataStream();
-            xxx.Wait();
+            //var xxx = stream.getDataStream();
+            //xxx.Wait();
             // test getset API
             //CallWebAPI api = new CallWebAPI();
+            HttpRequestHelper remitanoSite = new HttpRequestHelper();
+            var x = await remitanoSite.GetTAsync<REMI_RATE>("https://remitano.com/api/v1/rates/exchange");
+            Console.WriteLine(x.bfx_BCHUSD);
 
             //api.CallAPIGet(ConstantVarURL.REMI_API_BTC );
             Console.WriteLine("thanh cong is ");

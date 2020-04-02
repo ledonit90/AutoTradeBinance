@@ -13,5 +13,12 @@ namespace Remibit.Utility.Helper
         public const string REMI_RATE_EXCHANGE = "https://remitano.com/api/v1/rates/exchange";
         public const string REMI_API_BTC = "";
         public const string REMI_API_USDT = "";
+
+        public class RequestHeader
+        {
+            public const string JSON = "application/json";
+
+            public const string TEXT = "html\text";
+        }
     }
 }

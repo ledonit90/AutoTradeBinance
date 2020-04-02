@@ -23,5 +23,9 @@ namespace Remibit.Utility.Common
         public static string BINANCE_API => ConfigurationManager.AppSettings["BINANCE_API"];
         public static string API_KEY => ConfigurationManager.AppSettings["API_KEY"];
         public static string API_SECRET_KEY => ConfigurationManager.AppSettings["API_SECRET_KEY"];
+
+        public static string MongoDbConnection => ConfigurationManager.AppSettings["MongoDbConnection"];
+        public static string MonDataSet => ConfigurationManager.AppSettings["MonDataSet"];
+
     }
 }
