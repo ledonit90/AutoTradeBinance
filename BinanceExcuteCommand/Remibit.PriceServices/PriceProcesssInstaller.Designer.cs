@@ -28,29 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
-            this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
+            this.processIntaller = new System.ServiceProcess.ServiceProcessInstaller();
+            this.serviceInstaller = new System.ServiceProcess.ServiceInstaller();
             // 
-            // serviceProcessInstaller1
+            // processIntaller
             // 
-            this.serviceProcessInstaller1.Password = null;
-            this.serviceProcessInstaller1.Username = null;
+            this.processIntaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+            this.processIntaller.Password = null;
+            this.processIntaller.Username = null;
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "Service1";
+            this.serviceInstaller.Description = "Remibit.PriceSerivces - ServiceStack Windows Service.";
+            this.serviceInstaller.DisplayName = "Remibit.PriceSerivces";
+            this.serviceInstaller.ServiceName = "Remibit.PriceSerivces";
+            this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
             this.Installers.AddRange(new System.Configuration.Install.Installer[] {
-            this.serviceProcessInstaller1,
-            this.serviceInstaller1});
+            this.processIntaller,
+            this.serviceInstaller});
 
         }
 
         #endregion
 
-        private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
-        private System.ServiceProcess.ServiceInstaller serviceInstaller1;
+        private System.ServiceProcess.ServiceProcessInstaller processIntaller;
+        private System.ServiceProcess.ServiceInstaller serviceInstaller;
     }
 }

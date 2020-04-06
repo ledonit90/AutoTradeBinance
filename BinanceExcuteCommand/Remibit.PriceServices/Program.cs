@@ -7,7 +7,7 @@ namespace Remibit.PriceServices
 {
     static class Program
     {
-        private const string ListeningOn = "http://localhost:8088/";
+        private const string ListeningOn = "http://localhost:9908/";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,7 +15,7 @@ namespace Remibit.PriceServices
         {
             var appHost = new AppHost();
             var listeningOn = appHost.AppSettings.GetString("service:listeningOn");
-            listeningOn = listeningOn ?? "http://*:1088/";
+            listeningOn = listeningOn ?? "http://*:9908/";
             //Allow you to debug your Windows Service while you're deleloping it. 
             #if DEBUG
             Console.WriteLine("Running WinServiceAppHost in Console mode");

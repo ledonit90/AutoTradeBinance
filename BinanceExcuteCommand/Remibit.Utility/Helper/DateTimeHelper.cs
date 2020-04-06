@@ -21,5 +21,10 @@ namespace Remibit.Utility.Helper
         {
             return DateTime.Now.ToString(format).Replace("/", "");
         }
+
+        public static int CurrentUnixTimeStamp()
+        {
+            return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+        }
     }
 }

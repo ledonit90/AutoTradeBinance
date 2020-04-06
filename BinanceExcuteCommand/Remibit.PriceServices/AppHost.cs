@@ -21,6 +21,7 @@ using BackEndAPI.DataEntities;
 using Microsoft.EntityFrameworkCore;
 using Remibit.Utility.Common;
 using Remibit.PriceServices.Models;
+using System.Configuration;
 
 namespace Remibit.PriceServices
 {
@@ -31,6 +32,7 @@ namespace Remibit.PriceServices
         /// </summary>
         public AppHost() : base("Remibit.PriceServices", typeof(ServiceProcessor).Assembly) { }
         private ILog Log { get; set; }
+        private ServiceProcessor registerTask;
         private RedisMqServer _mqHost;
         /// <summary>
         /// Application specific configuration
@@ -62,7 +64,8 @@ namespace Remibit.PriceServices
             var redisMq = RemibitRedisPoolManager.GetClientsManager(redisConfig);
             container.Register<IMessageFactory>(c => new RedisMessageFactory(redisMq));
 
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<SGDDataContext>().UseLazyLoadingProxies().UseSqlServer(AppSettings.GetString("SGDConnection"));
+            var dbconStr = ConfigurationManager.ConnectionStrings["SGDConnection"].ConnectionString;
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<SGDDataContext>().UseLazyLoadingProxies().UseSqlServer(dbconStr);
             var mb = new ContainerBuilder();
             Action<ContainerBuilder> configAction = ((builder) =>
             {
@@ -156,5 +159,14 @@ namespace Remibit.PriceServices
                 return result;
             }, appSettings.Get<int>("Remibit:CreatePriceCoin"));
         }
+
+        #region Start and Stop
+        public override ServiceStackHost Start(string urlBase)
+        {
+            registerTask = new ServiceProcessor();
+            registerTask.getRateRemitano();
+            return base.Start(urlBase);
+        }
+        #endregion
     }
 }

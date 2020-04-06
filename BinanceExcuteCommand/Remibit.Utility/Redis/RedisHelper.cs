@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System.Threading.Tasks;
 using Remibit.Models.Remitano;
+using ServiceStack;
 
 namespace Remibit.Utility.Redis
 {
@@ -12,11 +13,16 @@ namespace Remibit.Utility.Redis
         {
             db = RedisConnectorHelper.RedisCache(3);
         }
-        public async Task savePriceAsync(CoinPrice price, int unixTime)
+        public void SaveContentWithUnixtime<T>(string key,object price, int unixTime)
         {
-            string content = JsonConvert.SerializeObject(price);
-            string key = "price_" + price.CodeCoin;
-            await db.HashSetAsync(key, new HashEntry[] { new HashEntry(unixTime, content) });
+            string content = price.ToSafeJson();
+            db.HashSetAsync(key, new HashEntry[] { new HashEntry(unixTime, content) });
+        }
+
+        public T GetObjectWithUnixTime<T>(string key, int unixTime)
+        {
+            var content = db.HashGetAsync(key,unixTime);
+            return JsonConvert.DeserializeObject<T>(content.Result);
         }
 
         public async Task RecylebinPriceAsync(string key,int beforeUnixTime, int distance, int space)

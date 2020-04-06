@@ -180,6 +180,7 @@
     <Compile Include="Remitano\CoinPrices.cs" />
     <Compile Include="Remitano\Offer.cs" />
     <Compile Include="Remitano\REMI_RATE.cs" />
+    <Compile Include="Remitano\VNDCOINRATE.cs" />
     <Compile Include="SupportObj\IPriceHub.cs" />
     <Compile Include="SupportObj\PriceHub.cs" />
   </ItemGroup>

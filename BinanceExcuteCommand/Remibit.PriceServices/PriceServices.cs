@@ -15,14 +15,17 @@ namespace Remibit.PriceServices
     {
         private readonly AppHostHttpListenerBase appHost;
         private readonly string listeningOn;
+        private readonly ServiceProcessor registerTask;
         public PriceServices(AppHostHttpListenerBase appHost, string listeningOn)
         {
+            registerTask = new ServiceProcessor();
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args)
         {
             this.appHost.Start(listeningOn);
+            registerTask.getRateRemitano();
         }
 
         protected override void OnStop()
