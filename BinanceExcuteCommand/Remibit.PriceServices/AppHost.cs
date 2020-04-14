@@ -164,7 +164,7 @@ namespace Remibit.PriceServices
         public override ServiceStackHost Start(string urlBase)
         {
             registerTask = new ServiceProcessor();
-            registerTask.getRateRemitano();
+            registerTask.getRateRemitanoAsync();
             return base.Start(urlBase);
         }
         #endregion

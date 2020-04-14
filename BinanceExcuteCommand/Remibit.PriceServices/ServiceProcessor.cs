@@ -8,6 +8,7 @@ using System.Timers;
 using Remibit.Utility.Redis;
 using Remibit.Utility.Helper;
 using Remibit.PriceServices.RequestDTO;
+using System;
 
 namespace Remibit.PriceServices
 {
@@ -41,18 +42,22 @@ namespace Remibit.PriceServices
         #endregion
 
         #region function getprice
-        public void getRateRemitano()
+        public void getRateRemitanoAsync()
         {
-            Timer aTimer;
-            aTimer = new Timer();
-            aTimer.Interval = 1000;
+            DateTimeHelper.getATimer(getETHPrice);
+            DateTimeHelper.getATimer(getBTCPrice);
+        }
 
-            // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += (source, e) =>
-            {
-                var test = DateTimeHelper.CurrentUnixTimeStamp();
-                redis.SaveContentWithUnixtime<int>("Remitano:VNDBTCRATE", test, test);
-            };
+        private void getETHPrice(Object source, ElapsedEventArgs e)
+        {
+            var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
+            redis.SaveContentWithUnixtime<int>("Remitano:VNDETHRATE", timeStamp, timeStamp);
+        }
+
+        private void getBTCPrice(Object source, ElapsedEventArgs e)
+        {
+            var test = DateTimeHelper.CurrentUnixTimeStamp();
+            redis.SaveContentWithUnixtime<int>("Remitano:VNDBTCRATE", test.ToString() + "btc", test);
         }
         #endregion
 
