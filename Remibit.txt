@@ -1,0 +1,15 @@
+- Tổng hợp dữ liệu: các dữ liệu trên c: btc,... trên remitano => lưu vào Redis từng coin một.
+- Lưu giá các loại coin theo binance và bitstamp.net ....
+- Tổng hợp thêm nhiều nguồn khác nhau như Vcc..... lưu vào Redis theo từng second
+- Tính toán giá trung bình
+- Tính giá cụ thể để cho từng loại C
+Tạo thêm 1 worker: - Tự động xóa dữ liệu Redis: 8 tiếng 1 lần lưu dữ liệu vào csdl trong 30 ngày.
+-------------------------------------------------------------------------------------------------------------
+Tao API tuong tac voi Binance, bittrex, okex ...  => lấy giá + fee, tương tác, giao dịch, tính toán sự thay đổi.
+- Thống kê và test việc gửi và nhận coin các loại với các sàn với các coin kd.
+-------------------------------------------------------------------------------------------------------------
+Tạo API rút nạp tiền: Paypal, Vietcombank .....
+-------------------------------------------------------------------------------------------------------------
+API: 
+- Viết hàm tính toán mua và bán, rút tiền, nạp tiền
+- Hàm check toàn vẹn tiền ... nếu có giao dịch nào, nếu có sai sót sẽ đóng site.
