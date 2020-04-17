@@ -3,17 +3,18 @@ using Remibit.Utility.Helper;
 using StackExchange.Redis;
 using System.Threading.Tasks;
 using Remibit.Models.Remitano;
+using System.Collections.Generic;
 
 namespace Remibit.Utility.Redis
 {
     public class RemitanoHelper
     {
         CallWebAPI api = new CallWebAPI();
-        private IDatabase db;
+        private RedisHelper redis;
         #region Calculator Price
         public RemitanoHelper()
         {
-            db = RedisConnectorHelper.RedisCache(2);
+            redis = new RedisHelper();
         }
         public async Task<Offers> GetCoinOffersAsync(RequestOffers rq)
         {
@@ -23,29 +24,22 @@ namespace Remibit.Utility.Redis
             if (!string.IsNullOrWhiteSpace(res)) return JsonConvert.DeserializeObject<Offers>(res);
             return null;
         }
-        public async Task<CoinPrice> getCoinPrice(string coin,bool isSell)
+        public async Task<Offers> getCoinPrice(string coin,bool isSell)
         {
             RequestOffers rq = new RequestOffers(coin);
             rq.offer_type = isSell ? "sell" : "buy";
             var strRq = ParameterHelper.ObjectToQueryString(rq);
             var strResponse = await api.CallAPIGet(strRq);
-            return JsonConvert.DeserializeObject<CoinPrice>(strResponse);
+            return JsonConvert.DeserializeObject<Offers>(strResponse);
         }
         // Save to Redis Database
         public async Task PriceOnTime(string coin, int time)
         {
-            var taskSell = getCoinPrice(coin, true);
-            var taskBuy = getCoinPrice(coin, false);
-            await Task.WhenAll(taskSell, taskBuy);
-            // xu ly ket qua
-
-            // luu vao csdl
-            var strCurMessage1m = JsonConvert.SerializeObject(taskSell.Result);
-            HashEntry[] redisBookHash =
-            {
-                new HashEntry(time, strCurMessage1m)
-            };
-            db.HashSet(time.ToString(), redisBookHash);
+            var resultSell = await getCoinPrice(coin, true);
+            var resultBuy = await getCoinPrice(coin, true);
+            double VNDRate = (resultSell.offers[0].price + resultBuy.offers[0].price + resultSell.offers[1].price + resultBuy.offers[1].price) / 4;
+            // luu vao redis
+            redis.SaveContentWithUnixtime<CoinPrice>("Remitano:" + coin.ToUpper() + "VNDRate", VNDRate, time);
         }
         #endregion
     }

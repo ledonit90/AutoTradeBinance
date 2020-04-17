@@ -203,6 +203,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BunchOfEnum.cs" />
     <Compile Include="Common\AppConstConfig.cs" />
     <Compile Include="Helper\CallAPI.cs" />
     <Compile Include="Helper\ConstantVarURL.cs" />

@@ -316,6 +316,10 @@
       <Project>{362C68AA-02F0-4D1F-A79E-3C0E31CB7B65}</Project>
       <Name>Remibit.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Remitano.Helper\Remitano.Helper.csproj">
+      <Project>{84c5f711-6959-420e-87b0-2ec67f1583ef}</Project>
+      <Name>Remitano.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

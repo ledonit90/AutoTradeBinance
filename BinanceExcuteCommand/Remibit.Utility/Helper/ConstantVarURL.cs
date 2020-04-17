@@ -21,4 +21,11 @@ namespace Remibit.Utility.Helper
             public const string TEXT = "html\text";
         }
     }
+
+    public class TradingPairs
+    {
+        public const string BTC_ETH = "BTC_ETH";
+
+        public const string BTC_BNB = "BTC_BNB";
+    }
 }

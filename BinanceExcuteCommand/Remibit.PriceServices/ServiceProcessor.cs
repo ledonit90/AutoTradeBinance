@@ -9,6 +9,8 @@ using Remibit.Utility.Redis;
 using Remibit.Utility.Helper;
 using Remibit.PriceServices.RequestDTO;
 using System;
+using static Remibit.Utility.BunchOfEnum;
+using Remibit.Utility;
 
 namespace Remibit.PriceServices
 {
@@ -16,6 +18,7 @@ namespace Remibit.PriceServices
     {
         ICacheClient CacheClient;
         RedisHelper redis;
+        RemitanoHelper remitanoHelper;
         #region Dependency
         private static readonly ILog Logger = LogManager.GetLogger(typeof(ServiceProcessor));
         public ILog Log => Logger;
@@ -33,6 +36,7 @@ namespace Remibit.PriceServices
         {
             CacheClient = HostContext.TryResolve<ICacheClient>();
             redis = new RedisHelper();
+            remitanoHelper = new RemitanoHelper();
         }
         #region Handle MQ
         public async Task<object> Any(PriceCoin req)
@@ -48,16 +52,18 @@ namespace Remibit.PriceServices
             DateTimeHelper.getATimer(getBTCPrice);
         }
 
-        private void getETHPrice(Object source, ElapsedEventArgs e)
+        private async void getETHPrice(Object source, ElapsedEventArgs e)
         {
             var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
-            redis.SaveContentWithUnixtime<int>("Remitano:VNDETHRATE", timeStamp, timeStamp);
+            await remitanoHelper.PriceOnTime(Remitano_coin.eth.GetDescription(), timeStamp);
+            //redis.SaveContentWithUnixtime<int>("Remitano:VNDETHRATE", timeStamp, timeStamp);
         }
 
-        private void getBTCPrice(Object source, ElapsedEventArgs e)
+        private async void getBTCPrice(Object source, ElapsedEventArgs e)
         {
-            var test = DateTimeHelper.CurrentUnixTimeStamp();
-            redis.SaveContentWithUnixtime<int>("Remitano:VNDBTCRATE", test.ToString() + "btc", test);
+            var unixTime = DateTimeHelper.CurrentUnixTimeStamp();
+            await remitanoHelper.PriceOnTime(Remitano_coin.btc.GetDescription(), unixTime);
+            //redis.SaveContentWithUnixtime<int>("Remitano:VNDBTCRATE", test.ToString() + "btc", test);
         }
         #endregion
 
