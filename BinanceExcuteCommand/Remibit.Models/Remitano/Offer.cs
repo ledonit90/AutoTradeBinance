@@ -14,35 +14,10 @@ namespace Remibit.Models.Remitano
         public double min_amount { get; set; }
         public double max_amount { get; set; }
         public string currency { get; set; }
-        public int payment_time { get; set; }
-        public string payment_descriptions { get; set; }
-        public string country_code { get; set; }
-        public string country_name { get; set; }
-        public string payment_method { get; set; }
-        public string username { get; set; }
-        public string counter_offer_type { get; set; }
         public bool disabled { get; set; }
         public double price { get; set; }
         public object max_coin_price { get; set; }
         public double? min_coin_price { get; set; }
-        public string reference_exchange { get; set; }
-        public string bank_name { get; set; }
-        public DateTime? last_online_all { get; set; }
-        public string last_online_type { get; set; }
-        public object buyer_trust_score { get; set; }
-        public double seller_speed_score { get; set; }
-        public int seller_released_trades_count { get; set; }
-        public bool require_verified_buyer { get; set; }
-        public bool site_country_strict { get; set; }
-        public List<string> taker_warnings { get; set; }
-        public object aml_adjustment { get; set; }
-        public bool has_fiat_balance { get; set; }
-        public string coin_currency { get; set; }
-        public bool scheduled { get; set; }
-        public object on1 { get; set; }
-        public object off1 { get; set; }
-        public object on2 { get; set; }
-        public object off2 { get; set; }
     }
 
     public class Meta
@@ -68,7 +43,7 @@ namespace Remibit.Models.Remitano
         public string country_code { get; set; } = "vn"; // vn
         public string coin { get; set; } = "btc";         // eth, btc
         public bool offline { get; set; } = false ;
-        public int page { get; set; } = 1;
+        public int page { get; set; }
         public string coin_currency { get; set; } = "btc";
 
         public RequestOffers(){}

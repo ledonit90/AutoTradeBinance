@@ -19,11 +19,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binances.Helper", "Binances
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remibit.Models", "Remibit.Models\Remibit.Models.csproj", "{EF24DEC4-0DE2-43D7-A4DC-616FF2541A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remitano.Helper", "Remitano.Helper\Remitano.Helper.csproj", "{84C5F711-6959-420E-87B0-2EC67F1583EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remibit.PriceServices", "Remibit.PriceServices\Remibit.PriceServices.csproj", "{A395E421-D810-4FE6-8A27-90BFC9AC3957}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remibit.CachesServices", "Remibit.CachesServices\Remibit.CachesServices.csproj", "{DEEF2CED-B6FE-4A16-9BA8-7CF3573BF08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VietnameseExchange.Helper", "VietnameseExchange.Helper\VietnameseExchange.Helper.csproj", "{84C5F711-6959-420E-87B0-2EC67F1583EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,6 @@ Global
 		{EF24DEC4-0DE2-43D7-A4DC-616FF2541A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF24DEC4-0DE2-43D7-A4DC-616FF2541A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF24DEC4-0DE2-43D7-A4DC-616FF2541A9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A395E421-D810-4FE6-8A27-90BFC9AC3957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A395E421-D810-4FE6-8A27-90BFC9AC3957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A395E421-D810-4FE6-8A27-90BFC9AC3957}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,6 +67,10 @@ Global
 		{DEEF2CED-B6FE-4A16-9BA8-7CF3573BF08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEEF2CED-B6FE-4A16-9BA8-7CF3573BF08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEEF2CED-B6FE-4A16-9BA8-7CF3573BF08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C5F711-6959-420E-87B0-2EC67F1583EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

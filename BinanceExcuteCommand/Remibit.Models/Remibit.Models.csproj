@@ -183,6 +183,8 @@
     <Compile Include="Remitano\VNDCOINRATE.cs" />
     <Compile Include="SupportObj\IPriceHub.cs" />
     <Compile Include="SupportObj\PriceHub.cs" />
+    <Compile Include="VCCEx\OfferLevel1.cs" />
+    <Compile Include="VCCEx\VCCTradeHistory.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

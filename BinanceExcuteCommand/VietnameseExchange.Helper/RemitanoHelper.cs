@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Remibit.Utility.Helper;
-using StackExchange.Redis;
 using System.Threading.Tasks;
 using Remibit.Models.Remitano;
-using System.Collections.Generic;
+using System.Linq;
+using Remibit.Utility.Redis;
 
-namespace Remibit.Utility.Redis
+namespace VietnameseExchange.Helper
 {
     public class RemitanoHelper
     {
@@ -16,19 +16,11 @@ namespace Remibit.Utility.Redis
         {
             redis = new RedisHelper();
         }
-        public async Task<Offers> GetCoinOffersAsync(RequestOffers rq)
-        {
-            var queryString = ParameterHelper.ObjectToQueryString(rq);
-            var res = await api.CallAPIGet(queryString);
-
-            if (!string.IsNullOrWhiteSpace(res)) return JsonConvert.DeserializeObject<Offers>(res);
-            return null;
-        }
         public async Task<Offers> getCoinPrice(string coin,bool isSell)
         {
             RequestOffers rq = new RequestOffers(coin);
             rq.offer_type = isSell ? "sell" : "buy";
-            var strRq = ParameterHelper.ObjectToQueryString(rq);
+            var strRq = ConstantVarURL.REMI_BASE_URL + "?" + ParameterHelper.ObjectToQueryString(rq);
             var strResponse = await api.CallAPIGet(strRq);
             return JsonConvert.DeserializeObject<Offers>(strResponse);
         }
@@ -36,8 +28,14 @@ namespace Remibit.Utility.Redis
         public async Task PriceOnTime(string coin, int time)
         {
             var resultSell = await getCoinPrice(coin, true);
-            var resultBuy = await getCoinPrice(coin, true);
-            double VNDRate = (resultSell.offers[0].price + resultBuy.offers[0].price + resultSell.offers[1].price + resultBuy.offers[1].price) / 4;
+            var resultBuy = await getCoinPrice(coin, false);
+            var AVGWeight = (resultSell.offers.Sum(x => x.max_amount) + resultBuy.offers.Sum(x => x.max_amount))/10;
+            var totalWeight = resultSell.offers.Sum(x => x.max_amount >= AVGWeight ? AVGWeight : x.max_amount) + resultBuy.offers.Sum(x => x.max_amount >= AVGWeight ? AVGWeight : x.max_amount);
+            double VNDRate = (
+                resultSell.offers.Sum(x => x.price *(x.max_amount >= AVGWeight ? AVGWeight : x.max_amount) ) + 
+                resultBuy.offers.Sum(x => x.price * (x.max_amount >= AVGWeight ? AVGWeight : x.max_amount))
+                ) 
+                / totalWeight;
             // luu vao redis
             redis.SaveContentWithUnixtime<CoinPrice>("Remitano:" + coin.ToUpper() + "VNDRate", VNDRate, time);
         }

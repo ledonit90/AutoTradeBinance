@@ -100,16 +100,16 @@ namespace Remibit.Utility.Helper
                 {
                     retVal = res.Content.ReadAsStringAsync().Result;
                     //SetIntoCache(url, JObj.ToString(), retVal);
-                    LoggingHelper.LogInfo("Res message = " + retVal);
+                    //LoggingHelper.LogInfo("Res message = " + retVal);
                 }
                 else
                 {
-                    LoggingHelper.LogException("Error message = " + res.ReasonPhrase);
+                    //LoggingHelper.LogException("Error message = " + res.ReasonPhrase);
                 }
             }
             catch (Exception err)
             {
-                LoggingHelper.LogException(err.ToString());
+                //LoggingHelper.LogException(err.ToString());
             }
 
             return retVal;
@@ -124,7 +124,7 @@ namespace Remibit.Utility.Helper
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //Send request to server
-            LoggingHelper.LogDebug("PostAPI Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
+            //LoggingHelper.LogDebug("PostAPI Sending POST " + client.BaseAddress + url + " == params = " + JObj.ToString());
 
             HttpContent content = CreateHttpContent(JObj);
             try
@@ -134,7 +134,7 @@ namespace Remibit.Utility.Helper
             }
             catch (Exception err)
             {
-                LoggingHelper.LogException(err.ToString());
+                //LoggingHelper.LogException(err.ToString());
                 return null;
             }
         }
@@ -150,7 +150,7 @@ namespace Remibit.Utility.Helper
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                LoggingHelper.LogDebug("CallAPIGet Sending GET" + client.BaseAddress + url + " == parans = ");
+                //LoggingHelper.LogDebug("CallAPIGet Sending GET" + client.BaseAddress + url + " == parans = ");
 
                 //Send request to server
                 var res = client.GetAsync(string.Format(url)).Result;
@@ -160,16 +160,16 @@ namespace Remibit.Utility.Helper
                 {
                     _result = res.Content.ReadAsStringAsync();
                     //SetIntoCache(url, "", _result);
-                    LoggingHelper.LogDebug("Res message = " + _result);
+                    //LoggingHelper.LogDebug("Res message = " + _result);
                 }
                 else
                 {
-                    LoggingHelper.LogDebug("Error message = " + res.ReasonPhrase);
+                    //LoggingHelper.LogDebug("Error message = " + res.ReasonPhrase);
                 }
             }
             catch (Exception err)
             {
-                LoggingHelper.LogException(err.ToString());
+                //LoggingHelper.LogException(err.ToString());
             }
             return _result;
         }
@@ -193,12 +193,12 @@ namespace Remibit.Utility.Helper
                 BuildUrlParams(ref url, dctParams);
 
                 var response = client.GetAsync(url).Result;
-                LoggingHelper.LogDebug("RestApiGet Sending GET " + client.BaseAddress + url + " == parans = ");
+                //LoggingHelper.LogDebug("RestApiGet Sending GET " + client.BaseAddress + url + " == parans = ");
 
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = response.Content.ReadAsStringAsync().Result;
-                    LoggingHelper.LogDebug("Res message = " + responseString);
+                    //LoggingHelper.LogDebug("Res message = " + responseString);
                     obj = JsonConvert.DeserializeObject<ResponseData>(responseString);
                 }
             }
@@ -216,7 +216,7 @@ namespace Remibit.Utility.Helper
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
-                LoggingHelper.LogDebug("RestApiGet List Sending GET " + client.BaseAddress + url + " == parans = ");
+                //LoggingHelper.LogDebug("RestApiGet List Sending GET " + client.BaseAddress + url + " == parans = ");
 
                 if (overrideTimeout != null)
                 {
@@ -255,7 +255,7 @@ namespace Remibit.Utility.Helper
                 var jsonRequest = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
 
-                LoggingHelper.LogDebug("RestApiPost Sending POST " + client.BaseAddress + url + " == parans = " + jsonRequest.ToString());
+                //LoggingHelper.LogDebug("RestApiPost Sending POST " + client.BaseAddress + url + " == parans = " + jsonRequest.ToString());
 
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
@@ -287,7 +287,7 @@ namespace Remibit.Utility.Helper
                     var jsonRequest = JsonConvert.SerializeObject(obj);
                     content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
                 }
-                LoggingHelper.LogDebug("RestApiPost List Sending POST " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
+                //LoggingHelper.LogDebug("RestApiPost List Sending POST " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
 
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
@@ -313,7 +313,7 @@ namespace Remibit.Utility.Helper
 
                 BuildUrlParams(ref url, dctParams);
 
-                LoggingHelper.LogDebug("RestApiPost List Sending PUT " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
+                //LoggingHelper.LogDebug("RestApiPost List Sending PUT " + client.BaseAddress + url + " == parans = " + dctParams.ToString());
 
                 var response = client.PutAsync(url, null).Result;
                 if (response.IsSuccessStatusCode)

@@ -316,9 +316,9 @@
       <Project>{362C68AA-02F0-4D1F-A79E-3C0E31CB7B65}</Project>
       <Name>Remibit.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Remitano.Helper\Remitano.Helper.csproj">
-      <Project>{84c5f711-6959-420e-87b0-2ec67f1583ef}</Project>
-      <Name>Remitano.Helper</Name>
+    <ProjectReference Include="..\VietnameseExchange.Helper\VietnameseExchange.Helper.csproj">
+      <Project>{84C5F711-6959-420E-87B0-2EC67F1583EF}</Project>
+      <Name>VietnameseExchange.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

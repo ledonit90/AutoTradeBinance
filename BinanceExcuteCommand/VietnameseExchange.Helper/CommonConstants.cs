@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Remitano.Helper
+namespace VietnameseExchange.Helper
 {
     public class CommonConstants
     {

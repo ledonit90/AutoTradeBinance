@@ -9,8 +9,7 @@ using Remibit.Utility.Redis;
 using Remibit.Utility.Helper;
 using Remibit.PriceServices.RequestDTO;
 using System;
-using static Remibit.Utility.BunchOfEnum;
-using Remibit.Utility;
+using VietnameseExchange.Helper;
 
 namespace Remibit.PriceServices
 {
@@ -19,6 +18,7 @@ namespace Remibit.PriceServices
         ICacheClient CacheClient;
         RedisHelper redis;
         RemitanoHelper remitanoHelper;
+        VCCHelper vccHelper;
         #region Dependency
         private static readonly ILog Logger = LogManager.GetLogger(typeof(ServiceProcessor));
         public ILog Log => Logger;
@@ -37,6 +37,7 @@ namespace Remibit.PriceServices
             CacheClient = HostContext.TryResolve<ICacheClient>();
             redis = new RedisHelper();
             remitanoHelper = new RemitanoHelper();
+            vccHelper = new VCCHelper();
         }
         #region Handle MQ
         public async Task<object> Any(PriceCoin req)
@@ -48,22 +49,29 @@ namespace Remibit.PriceServices
         #region function getprice
         public void getRateRemitanoAsync()
         {
-            DateTimeHelper.getATimer(getETHPrice);
-            DateTimeHelper.getATimer(getBTCPrice);
+            foreach(var coin in ConstantVarURL.Remitano_Listcoin)
+            {
+                DateTimeHelper.getATimer(getThePriceRemitano, 4000, coin);
+            }
+
+            foreach(var pair in ConstantVarURL.VccTradingPairs)
+            {
+                DateTimeHelper.getATimer(getThePriceVCC, 4000, pair);
+            }
         }
 
-        private async void getETHPrice(Object source, ElapsedEventArgs e)
+        private async void getThePriceRemitano(Object source, ElapsedEventArgs e)
         {
             var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
-            await remitanoHelper.PriceOnTime(Remitano_coin.eth.GetDescription(), timeStamp);
-            //redis.SaveContentWithUnixtime<int>("Remitano:VNDETHRATE", timeStamp, timeStamp);
+            string coin = ((CustomTimer)source).Data;
+            await remitanoHelper.PriceOnTime(coin, timeStamp);
         }
 
-        private async void getBTCPrice(Object source, ElapsedEventArgs e)
+        private async void getThePriceVCC(Object source, ElapsedEventArgs e)
         {
-            var unixTime = DateTimeHelper.CurrentUnixTimeStamp();
-            await remitanoHelper.PriceOnTime(Remitano_coin.btc.GetDescription(), unixTime);
-            //redis.SaveContentWithUnixtime<int>("Remitano:VNDBTCRATE", test.ToString() + "btc", test);
+            var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
+            string pair = ((CustomTimer)source).Data;
+            await vccHelper.PriceOnTime(pair, timeStamp);
         }
         #endregion
 

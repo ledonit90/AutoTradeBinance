@@ -219,6 +219,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonConstants.cs" />
+    <Compile Include="ExchangeHelper\AliniexHelper.cs" />
+    <Compile Include="ExchangeHelper\TRexExchangeHelper.cs" />
+    <Compile Include="ExchangeHelper\VCCHelper.cs" />
+    <Compile Include="ExchangeHelper\VicutaHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemitanoHelper.cs" />
   </ItemGroup>

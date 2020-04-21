@@ -25,9 +25,14 @@ namespace Remibit.Utility.Helper
             return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
-        public static Timer getATimer(ElapsedEventHandler a)
+        public static Timer getATimer(ElapsedEventHandler a,double interval, string coin)
         {
-            Timer aTimer = new Timer(1000);
+            CustomTimer aTimer = new CustomTimer()
+            {
+                Interval = 3000,
+                Data = coin
+            };
+            ;
             aTimer.Elapsed += a;
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
@@ -37,5 +42,10 @@ namespace Remibit.Utility.Helper
 
             return aTimer;
         }
+    }
+
+    public class CustomTimer : Timer
+    {
+        public string Data;
     }
 }
