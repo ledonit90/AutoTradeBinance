@@ -20,6 +20,6 @@ namespace RemibitPrices.Models.VCCEx
     {
         public object message { get; set; }
         public string dataVersion { get; set; }
-        public List<VccTrade> trades { get; set; }
+        public List<VccTrade> data { get; set; }
     }
 }

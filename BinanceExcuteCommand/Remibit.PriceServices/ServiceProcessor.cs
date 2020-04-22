@@ -49,10 +49,10 @@ namespace Remibit.PriceServices
         #region function getprice
         public void getRateRemitanoAsync()
         {
-            foreach(var coin in ConstantVarURL.Remitano_Listcoin)
-            {
-                DateTimeHelper.getATimer(getThePriceRemitano, 4000, coin);
-            }
+            //foreach(var coin in ConstantVarURL.Remitano_Listcoin)
+            //{
+            //    DateTimeHelper.getATimer(getThePriceRemitano, 4000, coin);
+            //}
 
             foreach(var pair in ConstantVarURL.VccTradingPairs)
             {

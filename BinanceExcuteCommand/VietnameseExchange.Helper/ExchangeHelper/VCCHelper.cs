@@ -32,15 +32,15 @@ namespace VietnameseExchange.Helper
             {
                 var askBids = await getCoinPrice<OfferLevel1>(VCC_Section.orderbook, tradePair, "level=1");
                 var historys = await getCoinPrice<VccTradeHistory>(VCC_Section.trades, tradePair, "count=4");
-                double TB1 = (double.Parse(askBids.offers.asks[0][0]) + double.Parse(askBids.offers.bids[0][0])) / 2;
-                var buyList = historys.trades.Where(x=>x.type == "buy").Take(4);
-                var sellList = historys.trades.Where(x=>x.type == "sell").Take(4);
+                double TB1 = (double.Parse(askBids.data.asks[0][0]) + double.Parse(askBids.data.bids[0][0])) / 2;
+                var buyList = historys.data.Where(x=>x.type == "buy").Take(4);
+                var sellList = historys.data.Where(x=>x.type == "sell").Take(4);
                 double buyPrice = buyList.Count() > 0 ? buyList.Sum(x => double.Parse(x.price))/ buyList.Count() : 0;
                 double sellPrice = sellList.Count() > 0 ? sellList.Sum(x => double.Parse(x.price))/ sellList.Count() : 0;
                 double TB2 = sellPrice >0 && buyPrice > 0 ? (buyPrice + sellList.Sum(x => double.Parse(x.price))/sellList.Count())/2 : (sellPrice > 0 ? sellPrice: buyPrice);
                 // luu vao redis
                 double VNDRate = TB2*0.4 + TB1*0.6;
-                redis.SaveContentWithUnixtime<CoinPrice>("Remitano:" + tradePair + "VNDRate", VNDRate, time);
+                redis.SaveContentWithUnixtime<CoinPrice>("VccExchange:" + tradePair + "VNDRate", VNDRate, time);
             }catch(Exception ex)
             {
                 Console.WriteLine("khong lay duoc vcc excchange");

@@ -17,6 +17,6 @@ namespace RemibitPrices.Models.VCCEx
     {
         public object message { get; set; }
         public string dataVersion { get; set; }
-        public VCCOffers offers { get; set; }
+        public VCCOffers data { get; set; }
     }
 }
