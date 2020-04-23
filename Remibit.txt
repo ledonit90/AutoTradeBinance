@@ -3,13 +3,22 @@
 - Tổng hợp thêm nhiều nguồn khác nhau như Vcc..... lưu vào Redis theo từng second
 - Tính toán giá trung bình
 - Tính giá cụ thể để cho từng loại C
+-> 48 tiếng làm việc => 8 ngày
 Tạo thêm 1 worker: - Tự động xóa dữ liệu Redis: 8 tiếng 1 lần lưu dữ liệu vào csdl trong 30 ngày.
 -------------------------------------------------------------------------------------------------------------
 Tao API tuong tac voi Binance, bittrex, okex ...  => lấy giá + fee, tương tác, giao dịch, tính toán sự thay đổi.
 - Thống kê và test việc gửi và nhận coin các loại với các sàn với các coin kd.
+=> cần 10 ngày
 -------------------------------------------------------------------------------------------------------------
-Tạo API rút nạp tiền: Paypal, Vietcombank .....
+Tạo API rút nạp tiền: Paypal, Vietcombank ..... app điện thoại -> send OTP
+=> 5 ngày
 -------------------------------------------------------------------------------------------------------------
 API: 
-- Viết hàm tính toán mua và bán, rút tiền, nạp tiền
+- Viết hàm tính toán mua và bán, rút tiền, nạp tiền, lịch sử mua bán .....
+- Service tính toán comfirmation
 - Hàm check toàn vẹn tiền ... nếu có giao dịch nào, nếu có sai sót sẽ đóng site.
+=> cần 1 tháng.
+
+Note: - tất cả các coin chênh giá usdt không vượt quá fee
+
+Vicuta: https://vicuta.com/api/getMarket
