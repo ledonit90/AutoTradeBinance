@@ -9,7 +9,7 @@ namespace Remibit.Models.Binance
     public class RequestParameter
     {
         public string symbol { get; set; }
-        public string type { get; set; }
+        public OrderType type { get; set; }
         public string timeInForce { get; set; }
         public double quantity { get; set; }
         public double price { get; set; }

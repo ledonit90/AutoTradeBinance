@@ -11,6 +11,7 @@ namespace Remibit.Utility.Helper
 
         public const string REMI_BASE_URL = "https://remitano.com/api/v1/offers";
         public const string VCCEX_BASE_URL = "https://vcc.exchange/api/v2/";
+        public const string VICUTA_MARKET_URL = "https://vicuta.com/api/getMarket";
         public const string REMI_API_ETH = "";
         public const string REMI_RATE_EXCHANGE = "https://remitano.com/api/v1/rates/exchange";
         public const string REMI_API_BTC = "";

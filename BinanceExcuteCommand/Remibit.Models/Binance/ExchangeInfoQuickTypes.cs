@@ -121,7 +121,15 @@ namespace Remibit.Models.Binance
 
     public enum FilterType { IcebergParts, LotSize, MarketLotSize, MaxNumAlgoOrders, MinNotional, PercentPrice, PriceFilter };
 
-    public enum OrderType { Limit, LimitMaker, Market, StopLossLimit, TakeProfitLimit };
+    public enum OrderType {
+        LIMIT,
+        MARKET,
+        STOP_LOSS,
+        STOP_LOSS_LIMIT,
+        TAKE_PROFIT,
+        TAKE_PROFIT_LIMIT,
+        LIMIT_MAKER
+    };
 
     public enum QuoteAsset { Bnb, Btc, Eth, Pax, Tusd, Usdc, Usds, Usdt, Xrp };
 
@@ -231,15 +239,15 @@ namespace Remibit.Models.Binance
             switch (value)
             {
                 case "LIMIT":
-                    return OrderType.Limit;
+                    return OrderType.LIMIT;
                 case "LIMIT_MAKER":
-                    return OrderType.LimitMaker;
+                    return OrderType.LIMIT_MAKER;
                 case "MARKET":
-                    return OrderType.Market;
+                    return OrderType.MARKET;
                 case "STOP_LOSS_LIMIT":
-                    return OrderType.StopLossLimit;
+                    return OrderType.STOP_LOSS_LIMIT;
                 case "TAKE_PROFIT_LIMIT":
-                    return OrderType.TakeProfitLimit;
+                    return OrderType.TAKE_PROFIT_LIMIT;
             }
             throw new Exception("Cannot unmarshal type OrderType");
         }
@@ -254,19 +262,19 @@ namespace Remibit.Models.Binance
             var value = (OrderType)untypedValue;
             switch (value)
             {
-                case OrderType.Limit:
+                case OrderType.LIMIT:
                     serializer.Serialize(writer, "LIMIT");
                     return;
-                case OrderType.LimitMaker:
+                case OrderType.LIMIT_MAKER:
                     serializer.Serialize(writer, "LIMIT_MAKER");
                     return;
-                case OrderType.Market:
+                case OrderType.MARKET:
                     serializer.Serialize(writer, "MARKET");
                     return;
-                case OrderType.StopLossLimit:
+                case OrderType.STOP_LOSS_LIMIT:
                     serializer.Serialize(writer, "STOP_LOSS_LIMIT");
                     return;
-                case OrderType.TakeProfitLimit:
+                case OrderType.TAKE_PROFIT_LIMIT:
                     serializer.Serialize(writer, "TAKE_PROFIT_LIMIT");
                     return;
             }

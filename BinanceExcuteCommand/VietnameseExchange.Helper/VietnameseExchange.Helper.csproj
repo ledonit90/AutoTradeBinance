@@ -220,6 +220,7 @@
   <ItemGroup>
     <Compile Include="CommonConstants.cs" />
     <Compile Include="ExchangeHelper\AliniexHelper.cs" />
+    <Compile Include="ExchangeHelper\FiahubHelper.cs" />
     <Compile Include="ExchangeHelper\TRexExchangeHelper.cs" />
     <Compile Include="ExchangeHelper\VCCHelper.cs" />
     <Compile Include="ExchangeHelper\VicutaHelper.cs" />

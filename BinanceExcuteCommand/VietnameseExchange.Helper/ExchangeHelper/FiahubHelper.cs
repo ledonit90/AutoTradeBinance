@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Binances.Helper
+namespace RemitanoPrices.ExchangeHelper
 {
-    public class AutoBuyBNB
+    public class FiahubHelper
     {
-        //public static BuyBnB
     }
 }

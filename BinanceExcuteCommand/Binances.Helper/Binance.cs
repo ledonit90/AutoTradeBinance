@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Remibit.Models.Binance;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Binances.Helper
 {
@@ -21,14 +23,39 @@ namespace Binances.Helper
 
         public string GenerateSignature(string RequestBody)
         {
-            var result = hasher.HmacSha256(apiSecretKey, RequestBody);
+            var key = Encoding.UTF8.GetBytes(apiSecretKey);
+            string stringHash;
+            using (var hmac = new HMACSHA256(key))
+            {
+                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(RequestBody));
+                stringHash = BitConverter.ToString(hash).Replace("-", "");
+            }
 
-            return result;
+            return stringHash;
         }
 
         public async Task<bool> buyTokenAsync(RequestParameter rq)
         {
-            string requestURL = await RequestURLAsync(rq.symbol, rq.type, rq.timeInForce, rq.quantity, rq.price, rq.recvWindow);
+            string requestURL = await RequestURLAsync(rq.symbol, rq.timeInForce, rq.quantity, rq.price, rq.type, 5000);
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(@"https://www.binance.com");
+
+                using (var request = new HttpRequestMessage(HttpMethod.Post, requestURL))
+                {
+                    request.Headers.TryAddWithoutValidation("X-MBX-APIKEY", this.apiKey);
+                    request.Headers.Accept
+                    .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> SellTokenAsync(string symbol, string timeInForce, double quantity, double price, OrderType type = OrderType.LIMIT, int recvWindow = 2)
+        {
+            string requestURL = await RequestURLAsync(symbol,  timeInForce, quantity, price, type, recvWindow);
             using (var httpClient = new HttpClient())
             {
                 using (var request = new HttpRequestMessage(new HttpMethod("POST"), requestURL))
@@ -36,61 +63,38 @@ namespace Binances.Helper
                     request.Headers.TryAddWithoutValidation("X-MBX-APIKEY", this.apiKey);
 
                     var response = await httpClient.SendAsync(request);
-                    var resultInfo = response.Content.ReadAsStringAsync().Result;
-                }
-            }
-            return true;
-        }
-
-        public async Task<bool> SellTokenAsync(string symbol, string type, string timeInForce, double quantity, double price, int recvWindow = 2)
-        {
-            string requestURL = await RequestURLAsync(symbol, type, timeInForce, quantity, price, recvWindow);
-            using (var httpClient = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(new HttpMethod("POST"), requestURL))
-                {
-                    request.Headers.TryAddWithoutValidation("X-MBX-APIKEY", this.apiKey);
-
-                    var response = await httpClient.SendAsync(request);
                 }
             }
 
             return true;
         }
 
-        public async Task<string> RequestURLAsync(string symbol, string type, string timeInForce, double quantity, double price, int recvWindow = 2)
+        public async Task<string> RequestURLAsync(string symbol, string timeInForce, double quantity, double price, OrderType type = OrderType.LIMIT, int recvWindow = 1000)
         {
-            string url = "";
-            var tempURL = "https://api.binance.com/api/v3/order?";
+            var tempURL = LinkConfig.New_order;
             DateTime now = DateTime.UtcNow;
-            var unixTime = await GetServerTimeAsync();
+            var unixTime = GetServerTimeAsync(DateTime.Now.ToUniversalTime());
             string signature = "";
-            string MessageParameter = "symbol=" + symbol + "&side=BUY&type=" + type + "&timeInForce=GTC&quantity=" + quantity;
-            MessageParameter += "&price=" + price + "&recvWindow=" + recvWindow + "&timestamp=" + unixTime;
+            string MessageParameter = $"?symbol={symbol.ToUpper()}&side=BUY&type={type}&quantity={quantity}"
+                + (type == OrderType.LIMIT ? $"&timeInForce=GTC" : "")
+                + (type == OrderType.LIMIT ? $"&price={price}" : "")
+                + $"&recvWindow={recvWindow}";
+            MessageParameter +=  "&timestamp=" + unixTime;
             //get signature
             signature = GenerateSignature(MessageParameter);
-            url = tempURL + MessageParameter + "&signature=" + signature;
+            string url = tempURL + MessageParameter + "&signature=" + signature;
             return url;
         }
 
-        public async Task<long> GetServerTimeAsync()
+        public string GetServerTimeAsync(DateTime baseDateTime)
         {
-            using (var httpClient = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(new HttpMethod("GET"), LinkConfig.serverTime))
-                {
-                    var response = await httpClient.SendAsync(request);
-                    var exchangeInfo = response.Content.ReadAsStringAsync().Result;
-                    // chang can phai lam gi ca
-                    var exInfoObject = JsonConvert.DeserializeObject<serverTimes>(exchangeInfo);
-                    return exInfoObject.serverTime;
-                }
-            }
+            var dtOffset = new DateTimeOffset(baseDateTime);
+            return dtOffset.ToUnixTimeMilliseconds().ToString();
         }
 
         public async Task<AccountInfo> AccountInfo()
         {
-            var responseServerTime  = await GetServerTimeAsync();
+            var responseServerTime  = GetServerTimeAsync(DateTime.Now.ToUniversalTime());
             string requestURL = "recvWindow=5000&timestamp="+responseServerTime;
 
             string signature = GenerateSignature(requestURL);
@@ -111,7 +115,7 @@ namespace Binances.Helper
 
         public async Task<DepositeAddressResponse> getDepositeAddress(string Coins)
         {
-            var responseServerTime = await GetServerTimeAsync();
+            var responseServerTime = GetServerTimeAsync(DateTime.Now.ToUniversalTime());
             string requestURL = "asset="+ Coins + "&status=true&" + "recvWindow=5000&timestamp=" + responseServerTime;
 
             string signature = GenerateSignature(requestURL);

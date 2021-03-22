@@ -19,6 +19,7 @@ namespace Remibit.PriceServices
         RedisHelper redis;
         RemitanoHelper remitanoHelper;
         VCCHelper vccHelper;
+        VicutaHelper vicutaHelper;
         #region Dependency
         private static readonly ILog Logger = LogManager.GetLogger(typeof(ServiceProcessor));
         public ILog Log => Logger;
@@ -38,6 +39,7 @@ namespace Remibit.PriceServices
             redis = new RedisHelper();
             remitanoHelper = new RemitanoHelper();
             vccHelper = new VCCHelper();
+            vicutaHelper = new VicutaHelper();
         }
         #region Handle MQ
         public async Task<object> Any(PriceCoin req)
@@ -49,28 +51,39 @@ namespace Remibit.PriceServices
         #region function getprice
         public void getRateRemitanoAsync()
         {
-            //foreach(var coin in ConstantVarURL.Remitano_Listcoin)
-            //{
-            //    DateTimeHelper.getATimer(getThePriceRemitano, 4000, coin);
-            //}
+            foreach (var coin in ConstantVarURL.Remitano_Listcoin)
+            {
+                DateTimeHelper.getATimer(getThePriceRemitano, 4000, coin);
+            }
 
-            foreach(var pair in ConstantVarURL.VccTradingPairs)
+            foreach (var pair in ConstantVarURL.VccTradingPairs)
             {
                 DateTimeHelper.getATimer(getThePriceVCC, 4000, pair);
             }
+
+            DateTimeHelper.getATimer(getThePriceVicuta, 4000, "");
         }
 
         private async void getThePriceRemitano(Object source, ElapsedEventArgs e)
         {
             var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
             string coin = ((CustomTimer)source).Data;
+            Console.WriteLine("price on Remitano: " + coin);
             await remitanoHelper.PriceOnTime(coin, timeStamp);
+        }
+
+        private async void getThePriceVicuta(Object source, ElapsedEventArgs e)
+        {
+            var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
+            Console.WriteLine("price on Vicuta: ");
+            await vicutaHelper.PriceOnTime( timeStamp);
         }
 
         private async void getThePriceVCC(Object source, ElapsedEventArgs e)
         {
             var timeStamp = DateTimeHelper.CurrentUnixTimeStamp();
             string pair = ((CustomTimer)source).Data;
+            Console.WriteLine("price on VCC: " + pair);
             await vccHelper.PriceOnTime(pair, timeStamp);
         }
         #endregion

@@ -185,6 +185,7 @@
     <Compile Include="SupportObj\PriceHub.cs" />
     <Compile Include="VCCEx\OfferLevel1.cs" />
     <Compile Include="VCCEx\VCCTradeHistory.cs" />
+    <Compile Include="VicutaAsset.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

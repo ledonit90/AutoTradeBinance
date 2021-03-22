@@ -50,7 +50,7 @@ namespace Remibit.Models.Binance
 
 
         // -------------------------------------------- Account endpoints -----------------------------------------
-        public static readonly string New_order = "https://api.binance.com/api/v3/order";
+        public static readonly string New_order = "/api/v3/order";
         // symbol       STRING  YES
         // side         ENUM    YES
         // type         ENUM    YES

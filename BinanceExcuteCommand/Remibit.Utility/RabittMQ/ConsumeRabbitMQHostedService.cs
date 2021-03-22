@@ -8,12 +8,12 @@ namespace Remibit.Utility.RabitMQ
 {
     public class ConsumeRabbitMQHostedService : BackgroundService
     {
-        Subscriber _subscriber;
+        SubscriberIhub _subscriber;
         IHubContext<PriceHub, IPriceHub> _pricehub;
         public ConsumeRabbitMQHostedService(IHubContext<PriceHub, IPriceHub> pricehub)
         {
             _pricehub = pricehub;
-            _subscriber = new Subscriber(pricehub);
+            _subscriber = new SubscriberIhub(pricehub);
             _subscriber.ExchangeName = "getData";
             _subscriber.QueueName = "usdtbtc";
             _subscriber.getStartedUse();

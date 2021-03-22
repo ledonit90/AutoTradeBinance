@@ -1,30 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.SignalR;
-using Remibit.Models.SupportObj;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Remibit.Utility.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Remibit.Utility.RabitMQ
+namespace Remibit.Utility.RabittMQ
 {
     public class Subscriber
     {
         private ConnectionFactory _cf;
         private IConnection _conn;
         private IModel _channel;
-        private IHubContext<PriceHub, IPriceHub> _priceHub;
 
-        public string QueueName { get ; set ; }
-        public string ExchangeName { get; set ; }
-        public bool durable { get; set ; } = true;
-        public bool exclusive { get; set ; } = false;
+        public string RABBITMQ_IP { get; set; }
+        public int RABBIT_PORT { get; set; }
+        public string RABBITMQ_USERNAME { get; set; }
+        public string RABBITMQ_PASSWORD { get; set; }
+        public string QueueName { get; set; }
+        public string ExchangeName { get; set; }
+        public bool durable { get; set; } = true;
+        public bool exclusive { get; set; } = false;
         public bool autoDelete { get; set; } = false;
         public IDictionary<string, object> arguments { get; set; } = null;
 
-        public Subscriber(IHubContext<PriceHub, IPriceHub> pricehub)
+        public Subscriber()
         {
-            _priceHub = pricehub;
         }
 
         public void getStartedUse()
@@ -51,17 +54,11 @@ namespace Remibit.Utility.RabitMQ
             this._conn.Close();
         }
 
-        public void SubcribeAChannel()
+        public void SubcribeAsync(EventHandler<BasicDeliverEventArgs> hamgansau)
         {
             var consumer = new EventingBasicConsumer(_channel);
 
-            consumer.Received += async (model, ea) =>
-            {
-                // Use SignalR send message
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                await _priceHub.Clients.All.SendMessageAsync(message);
-            };
+            consumer.Received += hamgansau;
 
             consumer.Shutdown += OnConsumerShutdown;
             consumer.Registered += OnConsumerRegistered;

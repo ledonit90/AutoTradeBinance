@@ -19,7 +19,7 @@ namespace Binances.Helper
             // chang can gi ca.
         }
 
-        public async Task getDataStream()
+        public async Task getDataStream(string hostUri)
         {
             Publisher test = new Publisher(AppConstConfig.PRICE_QEXCHANGE, AppConstConfig.PRICE_QNAME);
             using (ClientWebSocket ws = new ClientWebSocket())

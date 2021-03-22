@@ -11,7 +11,7 @@ namespace Remibit.Utility.Redis
         {
             var configurationOptions = new ConfigurationOptions
             {
-                EndPoints = { "127.0.0.1:6379" }
+                EndPoints = { "34.221.95.44:6398" }
             };
 
             LazyConnection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(configurationOptions));
