@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
+    <Compile Include="BinanceClient.cs" />
     <Compile Include="BinanceStream.cs" />
     <Compile Include="Domain\Abstract\ApiClientAbstract.cs" />
     <Compile Include="Domain\Abstract\BinanceClientAbstract.cs" />
