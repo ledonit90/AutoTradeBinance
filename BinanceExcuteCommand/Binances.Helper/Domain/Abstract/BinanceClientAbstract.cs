@@ -11,11 +11,6 @@ namespace Binances.Helper.Domain.Abstract
     public abstract class BinanceClientAbstract
     {
         /// <summary>
-        /// Secret used to authenticate within the API.
-        /// </summary>
-        public TradingRules _tradingRules;
-
-        /// <summary>
         /// Client to be used to call the API.
         /// </summary>
         public readonly IApiClient _apiClient;

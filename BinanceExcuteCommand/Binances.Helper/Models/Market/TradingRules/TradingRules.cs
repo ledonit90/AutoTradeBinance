@@ -10,12 +10,14 @@ namespace Binances.Helper.Models.Market.TradingRules
     public class TradingRules
     {
         [JsonProperty("timezone")]
-        public string Timezone { get; set; }
+        public string timezone { get; set; }
         [JsonProperty("serverTime")]
-        public long ServerTime { get; set; }
+        public long serverTime { get; set; }
         [JsonProperty("rateLimits")]
-        public IEnumerable<RateLimit> RateLimits { get; set; }
+        public List<RateLimit> rateLimits { get; set; }
+        [JsonProperty("exchangeFilters")]
+        public List<object> exchangeFilters { get; set; }
         [JsonProperty("symbols")]
-        public IEnumerable<Symbol> Symbols { get; set; }
+        public List<Symbol> symbols { get; set; }
     }
 }

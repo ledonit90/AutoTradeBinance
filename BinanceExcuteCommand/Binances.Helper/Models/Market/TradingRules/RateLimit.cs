@@ -10,10 +10,12 @@ namespace Binances.Helper.Models.Market.TradingRules
    public class RateLimit
     {
         [JsonProperty("rateLimitType")]
-        public string RateLimitType { get; set; }
+        public string rateLimitType { get; set; }
         [JsonProperty("interval")]
-        public string Interval { get; set; }
+        public string interval { get; set; }
+        [JsonProperty("intervalNum")]
+        public int intervalNum { get; set; }
         [JsonProperty("limit")]
-        public int Limit { get; set; }
+        public int limit { get; set; }
     }
 }

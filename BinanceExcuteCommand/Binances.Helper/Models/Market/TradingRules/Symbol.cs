@@ -10,22 +10,38 @@ namespace Binances.Helper.Models.Market.TradingRules
     public class Symbol
     {
         [JsonProperty("symbol")]
-        public string SymbolName { get; set; }
+        public string symbol { get; set; }
         [JsonProperty("status")]
-        public string Status { get; set; }
+        public string status { get; set; }
         [JsonProperty("baseAsset")]
-        public string BaseAsset { get; set; }
+        public string baseAsset { get; set; }
         [JsonProperty("baseAssetPrecision")]
-        public int BaseAssetPrecision { get; set; }
+        public int baseAssetPrecision { get; set; }
         [JsonProperty("quoteAsset")]
-        public string QuoteAsset { get; set; }
+        public string quoteAsset { get; set; }
         [JsonProperty("quotePrecision")]
-        public int QuotePrecision { get; set; }
+        public int quotePrecision { get; set; }
+        [JsonProperty("quoteAssetPrecision")]
+        public int quoteAssetPrecision { get; set; }
+        [JsonProperty("baseCommissionPrecision")]
+        public int baseCommissionPrecision { get; set; }
+        [JsonProperty("quoteCommissionPrecision")]
+        public int quoteCommissionPrecision { get; set; }
         [JsonProperty("orderTypes")]
-        public IEnumerable<string> OrderTypes { get; set; }
+        public List<string> orderTypes { get; set; }
         [JsonProperty("icebergAllowed")]
-        public bool IcebergAllowed { get; set; }
+        public bool icebergAllowed { get; set; }
+        [JsonProperty("ocoAllowed")]
+        public bool ocoAllowed { get; set; }
+        [JsonProperty("quoteOrderQtyMarketAllowed")]
+        public bool quoteOrderQtyMarketAllowed { get; set; }
+        [JsonProperty("isSpotTradingAllowed")]
+        public bool isSpotTradingAllowed { get; set; }
+        [JsonProperty("isMarginTradingAllowed")]
+        public bool isMarginTradingAllowed { get; set; }
         [JsonProperty("filters")]
-        public IEnumerable<Filter> Filters { get; set; }
+        public List<Filter> filters { get; set; }
+        [JsonProperty("permissions")]
+        public List<string> permissions { get; set; }
     }
 }

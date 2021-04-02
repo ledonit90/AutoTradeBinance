@@ -10,20 +10,34 @@ namespace Binances.Helper.Models.Market.TradingRules
     public class Filter
     {
         [JsonProperty("filterType")]
-        public string FilterType { get; set; }
+        public string filterType { get; set; }
         [JsonProperty("minPrice")]
-        public decimal MinPrice { get; set; }
+        public decimal minPrice { get; set; }
         [JsonProperty("maxPrice")]
-        public decimal MaxPrice { get; set; }
+        public decimal maxPrice { get; set; }
         [JsonProperty("tickSize")]
-        public decimal TickSize { get; set; }
+        public decimal tickSize { get; set; }
+        [JsonProperty("multiplierUp")]
+        public decimal multiplierUp { get; set; }
+        [JsonProperty("multiplierDown")]
+        public decimal multiplierDown { get; set; }
+        [JsonProperty("avgPriceMins")]
+        public int? avgPriceMins { get; set; }
         [JsonProperty("minQty")]
-        public decimal MinQty { get; set; }
+        public decimal minQty { get; set; }
         [JsonProperty("maxQty")]
-        public decimal MaxQty { get; set; }
+        public decimal maxQty { get; set; }
         [JsonProperty("stepSize")]
-        public decimal StepSize { get; set; }
+        public decimal stepSize { get; set; }
         [JsonProperty("minNotional")]
-        public decimal MinNotional { get; set; }
+        public decimal minNotional { get; set; }
+        [JsonProperty("applyToMarket")]
+        public bool? applyToMarket { get; set; }
+        [JsonProperty("limit")]
+        public int? limit { get; set; }
+        [JsonProperty("maxNumOrders")]
+        public int? maxNumOrders { get; set; }
+        [JsonProperty("maxNumAlgoOrders")]
+        public int? maxNumAlgoOrders { get; set; }
     }
 }

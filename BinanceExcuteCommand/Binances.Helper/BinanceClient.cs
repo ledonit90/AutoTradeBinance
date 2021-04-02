@@ -17,6 +17,7 @@ namespace Binances.Helper
 {
     public class BinanceClient : BinanceClientAbstract, IBinanceClient
     {
+        public TradingRules _tradingRules { get; set; }
         /// <summary>
         /// ctor.
         /// </summary>
@@ -26,7 +27,7 @@ namespace Binances.Helper
         {
             if (loadTradingRules)
             {
-                LoadTradingRules();
+                this._tradingRules = LoadTradingRulesAsync().Result;
             }
         }
 
@@ -61,37 +62,37 @@ namespace Binances.Helper
             // Validating Trading Rules
             if (_tradingRules != null)
             {
-                var symbolInfo = _tradingRules.Symbols.Where(r => r.SymbolName.ToUpper() == symbol.ToUpper()).FirstOrDefault();
-                var priceFilter = symbolInfo.Filters.Where(r => r.FilterType == "PRICE_FILTER").FirstOrDefault();
-                var sizeFilter = symbolInfo.Filters.Where(r => r.FilterType == "LOT_SIZE").FirstOrDefault();
+                var symbolInfo = _tradingRules.symbols.Where(r => r.symbol.ToUpper() == symbol.ToUpper()).FirstOrDefault();
+                var priceFilter = symbolInfo.filters.Where(r => r.filterType == "PRICE_FILTER").FirstOrDefault();
+                var sizeFilter = symbolInfo.filters.Where(r => r.filterType == "LOT_SIZE").FirstOrDefault();
 
                 if (symbolInfo == null)
                 {
                     throw new ArgumentException("Invalid symbol. ", "symbol");
                 }
-                if (quantity < sizeFilter.MinQty)
+                if (quantity < sizeFilter.minQty)
                 {
-                    throw new ArgumentException($"Quantity for this symbol is lower than allowed! Quantity must be greater than: {sizeFilter.MinQty}", "quantity");
+                    throw new ArgumentException($"Quantity for this symbol is lower than allowed! Quantity must be greater than: {sizeFilter.minQty}", "quantity");
                 }
-                if (icebergQty > 0m && !symbolInfo.IcebergAllowed)
+                if (icebergQty > 0m && !symbolInfo.icebergAllowed)
                 {
                     throw new Exception($"Iceberg orders not allowed for this symbol.");
                 }
 
                 if (orderType == OrderType.LIMIT)
                 {
-                    if (unitPrice < priceFilter.MinPrice)
+                    if (unitPrice < priceFilter.minPrice)
                     {
-                        throw new ArgumentException($"Price for this symbol is lower than allowed! Price must be greater than: {priceFilter.MinPrice}", "price");
+                        throw new ArgumentException($"Price for this symbol is lower than allowed! Price must be greater than: {priceFilter.minPrice}", "price");
                     }
                 }
             }
         }
 
-        private void LoadTradingRules()
+        private async Task<TradingRules> LoadTradingRulesAsync()
         {
-            var apiClient = new ApiClient("", "", EndPoints.TradingRules, addDefaultHeaders: false);
-            _tradingRules = apiClient.CallAsync<TradingRules>(ApiMethod.GET, "").Result;
+            var _tradingRules = await _apiClient.CallAsync<TradingRules>(ApiMethod.GET, EndPoints.ExchangeInfo);
+            return _tradingRules;
         }
         #endregion
 
@@ -231,6 +232,27 @@ namespace Binances.Helper
         }
         #endregion
 
+        #region Standard Price and quantity
+        public void StandardPriceQuantity(OrderBookOffer newOrder, string symbol)
+        {
+            var symbolInfo = _tradingRules.symbols.Where(r => r.symbol.ToUpper() == symbol.ToUpper()).FirstOrDefault();
+            var quantityFilter = symbolInfo.filters.Where(r => r.filterType == "LOT_SIZE").FirstOrDefault();
+            var priceFilter = symbolInfo.filters.Where(r => r.filterType == "PRICE_FILTER").FirstOrDefault();
+            
+            newOrder.Quantity = RoundForTrade(newOrder.Quantity,quantityFilter.stepSize);
+            newOrder.Price = RoundForTrade(newOrder.Price, priceFilter.tickSize);
+        }
+
+        public decimal RoundForTrade(decimal roundNumber, decimal tickSize)
+        {
+            int precision = (int)Math.Pow(10, (int)Math.Round(-Math.Log10((double)tickSize), 0));
+            int subQuantity = (int)(roundNumber * precision);
+            roundNumber = ((decimal)subQuantity) / precision;
+
+            return roundNumber;
+        }
+        #endregion
+
         #region Account Information
         /// <summary>
         /// Send in a new order.
@@ -245,12 +267,15 @@ namespace Binances.Helper
         /// <returns></returns>
         public async Task<NewOrder> PostNewOrder(string symbol, decimal quantity, decimal price, OrderSide side, OrderType orderType = OrderType.LIMIT, TimeInForce timeInForce = TimeInForce.GTC, decimal icebergQty = 0m, long recvWindow = 5000)
         {
+            // Standard form converter for price, quantity( PRICE_FILTER, LOT_SIZE)
+            OrderBookOffer newPriceQuantity = new OrderBookOffer() { Price = price, Quantity = quantity };
+            StandardPriceQuantity(newPriceQuantity, symbol);
             //Validates that the order is valid.
             ValidateOrderValue(symbol, orderType, price, quantity, icebergQty);
 
-            var args = $"symbol={symbol.ToUpper()}&side={side}&type={orderType}&quantity={quantity}"
+            var args = $"symbol={symbol.ToUpper()}&side={side}&type={orderType}&quantity={newPriceQuantity.Quantity}"
                 + (orderType == OrderType.LIMIT ? $"&timeInForce={timeInForce}" : "")
-                + (orderType == OrderType.LIMIT ? $"&price={price}" : "")
+                + (orderType == OrderType.LIMIT ? $"&price={newPriceQuantity.Price}" : "")
                 + (icebergQty > 0m ? $"&icebergQty={icebergQty}" : "")
                 + $"&recvWindow={recvWindow}";
             var result = await _apiClient.CallAsync<NewOrder>(ApiMethod.POST, EndPoints.NewOrder, true, args);
