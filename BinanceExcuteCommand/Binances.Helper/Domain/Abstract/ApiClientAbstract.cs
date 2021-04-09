@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using WebSocketSharp;
 
 namespace Binances.Helper.Domain.Abstract
@@ -42,7 +43,7 @@ namespace Binances.Helper.Domain.Abstract
         /// </summary>
         /// <typeparam name="T">Type used to parsed the response message.</typeparam>
         /// <param name="messageData">Websocket response data.</param>
-        public delegate void MessageHandler<T>(T messageData);
+        public delegate Task MessageHandler<T>(T messageData);
 
         /// <summary>
         /// Defines the constructor of the Api Client.

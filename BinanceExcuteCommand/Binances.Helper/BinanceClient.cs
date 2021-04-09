@@ -621,14 +621,14 @@ namespace Binances.Helper
         /// </summary>
         /// <param name="symbol">Ticker symbol.</param>
         /// <param name="tradeHandler">Handler to be used when a message is received.</param>
-        public void ListenTradeEndpoint(string symbol, ApiClientAbstract.MessageHandler<AggregateTradeMessage> tradeHandler)
+        public void ListenTradeEndpoint(string symbol, ApiClientAbstract.MessageHandler<StreamMessage> tradeHandler)
         {
             if (string.IsNullOrWhiteSpace(symbol))
             {
                 throw new ArgumentException("symbol cannot be empty. ", "symbol");
             }
 
-            var param = symbol + "@aggTrade";
+            var param = symbol.ToLower() + "@aggTrade";
             _apiClient.ConnectToWebSocket(param, tradeHandler);
         }
 

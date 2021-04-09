@@ -231,7 +231,7 @@ namespace Binances.Helper.Domain.Interface
         /// </summary>
         /// <param name="symbol">Ticker symbol.</param>
         /// <param name="tradeHandler">Handler to be used when a message is received.</param>
-        void ListenTradeEndpoint(string symbol, MessageHandler<AggregateTradeMessage> messageHandler);
+        void ListenTradeEndpoint(string symbol, MessageHandler<StreamMessage> messageHandler);
 
         /// <summary>
         /// Listen to the User Data endpoint.

@@ -4,25 +4,18 @@ namespace Binances.Helper.Models.WebSocket
 {
     public class AggregateTradeMessage
     {
-        [JsonProperty("e")]
-        public string EventType { get; set; }
-        [JsonProperty("E")]
-        public long EventTime { get; set; }
-        [JsonProperty("s")]
-        public string Symbol { get; set; }
-        [JsonProperty("a")]
-        public int AggregatedTradeId { get; set; }
-        [JsonProperty("p")]
-        public decimal Price { get; set; }
-        [JsonProperty("q")]
-        public decimal Quantity { get; set; }
-        [JsonProperty("f")]
-        public int FirstBreakdownTradeId { get; set; }
-        [JsonProperty("l")]
-        public int LastBreakdownTradeId { get; set; }
-        [JsonProperty("T")]
-        public long TradeTime { get; set; }
-        [JsonProperty("m")]
-        public bool BuyerIsMaker { get; set; }
+
+        public string e { get; set; }   // Event type
+        public long E { get; set; }     // Event time
+        public string s { get; set; }   // Symbol
+        public int t { get; set; }      // Trade ID
+        public decimal p { get; set; }   // Price
+        public string q { get; set; }   // Quantity
+        public int b { get; set; }      // Buyer order ID
+        public int a { get; set; }      // Seller order ID
+        public long T { get; set; }     // Trade time
+        public bool m { get; set; }     // Is the buyer the market maker? => true -> phần trên màu đỏ, người đặt lệnh mua khớp lệnh, => false -> màu xanh bên dưới -> người mua đặt lệnh
+                                        // BuyerIsMaker
+        public bool M { get; set; }     
     }
 }
