@@ -92,6 +92,21 @@ namespace Binances.Helper
             return dtOffset.ToUnixTimeMilliseconds().ToString();
         }
 
+        public async Task<long> GetServerTimeAsync2()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(new HttpMethod("GET"), LinkConfig.serverTime))
+                {
+                    var response = await httpClient.SendAsync(request);
+                    var exchangeInfo = response.Content.ReadAsStringAsync().Result;
+                    // chang can phai lam gi ca
+                    var exInfoObject = JsonConvert.DeserializeObject<serverTimes>(exchangeInfo);
+                    return exInfoObject.serverTime;
+                }
+            }
+        }
+
         public async Task<AccountInfo> AccountInfo()
         {
             var responseServerTime  = GetServerTimeAsync(DateTime.Now.ToUniversalTime());

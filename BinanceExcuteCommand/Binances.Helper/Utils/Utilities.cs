@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Remibit.Models.Binance;
+using System;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Binances.Helper.Utils
 {
@@ -33,10 +35,10 @@ namespace Binances.Helper.Utils
         /// Gets a timestamp in milliseconds.
         /// </summary>
         /// <returns>Timestamp in milliseconds.</returns>
-        public static string GenerateTimeStamp(DateTime baseDateTime)
+        public static long GenerateTimeStamp(DateTime baseDateTime)
         {
             var dtOffset = new DateTimeOffset(baseDateTime);
-            return dtOffset.ToUnixTimeMilliseconds().ToString();
+            return dtOffset.ToUnixTimeMilliseconds();
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace Binances.Helper.Domain.Abstract
         /// </summary>
         /// <typeparam name="T">Type used to parsed the response message.</typeparam>
         /// <param name="messageData">Websocket response data.</param>
-        public delegate Task MessageHandler<T>(T messageData);
+        public delegate Task<int> MessageHandler<T>(T messageData);
 
         /// <summary>
         /// Defines the constructor of the Api Client.

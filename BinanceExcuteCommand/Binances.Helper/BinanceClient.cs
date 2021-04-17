@@ -8,6 +8,8 @@ using Binances.Helper.Models.Market.TradingRules;
 using Binances.Helper.Models.UserStream;
 using Binances.Helper.Models.WebSocket;
 using Binances.Helper.Utils;
+using ServiceStack;
+using ServiceStack.Caching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,8 @@ namespace Binances.Helper
     public class BinanceClient : BinanceClientAbstract, IBinanceClient
     {
         public TradingRules _tradingRules { get; set; }
+        public ICacheClient CacheClient { get; set; }
+        public string serverTimeKey = "serverTimeCached";
         /// <summary>
         /// ctor.
         /// </summary>
@@ -29,6 +33,12 @@ namespace Binances.Helper
             {
                 this._tradingRules = LoadTradingRulesAsync().Result;
             }
+            InitService();
+        }
+
+        public void InitService()
+        {
+            CacheClient = HostContext.TryResolve<ICacheClient>();
         }
 
         #region Private Methods
@@ -115,6 +125,20 @@ namespace Binances.Helper
             var result = await _apiClient.CallAsync<ServerInfo>(ApiMethod.GET, EndPoints.CheckServerTime, false);
 
             return result;
+        }
+
+        public async Task<long> GetServerTimeWithCached()
+        {
+            var Cachedtime = CacheClient.Get<long>(this.serverTimeKey);
+            var unixTimeNow = Utilities.GenerateTimeStamp(DateTime.Now);
+            if ( Cachedtime == default || Cachedtime <=0 )
+            {
+                var serverTime = (await GetServerTime()).ServerTime;
+                CacheClient.Set(serverTimeKey, unixTimeNow - serverTime);
+                return serverTime;
+            }
+
+            return unixTimeNow - Cachedtime;
         }
         #endregion
 
@@ -283,30 +307,9 @@ namespace Binances.Helper
             return result;
         }
 
-        /// <summary>
-        /// Test new order creation and signature/recvWindow long. Creates and validates a new order but does not send it into the matching engine.
-        /// </summary>
-        /// <param name="symbol">Ticker symbol.</param>
-        /// <param name="quantity">Quantity to transaction.</param>
-        /// <param name="price">Price of the transaction.</param>
-        /// <param name="orderType">Order type (LIMIT-MARKET).</param>
-        /// <param name="side">Order side (BUY-SELL).</param>
-        /// <param name="timeInForce">Indicates how long an order will remain active before it is executed or expires.</param>
-        /// <param name="recvWindow">Specific number of milliseconds the request is valid for.</param>
-        /// <returns></returns>
-        public async Task<dynamic> PostNewOrderTest(string symbol, decimal quantity, decimal price, OrderSide side, OrderType orderType = OrderType.LIMIT, TimeInForce timeInForce = TimeInForce.GTC, decimal icebergQty = 0m, long recvWindow = 5000)
+        public Task<dynamic> PostNewOrderTest(string symbol, decimal quantity, decimal price, OrderSide side, OrderType orderType = OrderType.LIMIT, TimeInForce timeInForce = TimeInForce.GTC, decimal icebergQty = 0, long recvWindow = 6000000)
         {
-            //Validates that the order is valid.
-            ValidateOrderValue(symbol, orderType, price, quantity, icebergQty);
-
-            var args = $"symbol={symbol.ToUpper()}&side={side}&type={orderType}&quantity={quantity}"
-                + (orderType == OrderType.LIMIT ? $"&timeInForce={timeInForce}" : "")
-                + (orderType == OrderType.LIMIT ? $"&price={price}" : "")
-                + (icebergQty > 0m ? $"&icebergQty={icebergQty}" : "")
-                + $"&recvWindow={recvWindow}";
-            var result = await _apiClient.CallAsync<dynamic>(ApiMethod.POST, EndPoints.NewOrderTest, true, args);
-
-            return result;
+            throw new NotImplementedException();
         }
 
         /// <summary>

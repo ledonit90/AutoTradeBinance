@@ -10,11 +10,15 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ServiceStack.Caching;
+using Binances.Helper.Models.General;
 
 namespace Binances.Helper
 {
     public class ApiClient : ApiClientAbstract, IApiClient
     {
+        public ICacheClient CacheClient { get; set; }
+        public string serverTimeKey = "serverTimeCached";
 
         /// <summary>
         /// ctor.
@@ -25,6 +29,28 @@ namespace Binances.Helper
         public ApiClient(string apiKey, string apiSecret, string apiUrl = @"https://www.binance.com", string webSocketEndpoint = @"wss://stream.binance.com:9443/stream?streams=", bool addDefaultHeaders = true) : base(apiKey, apiSecret, apiUrl, webSocketEndpoint, addDefaultHeaders)
         {
         }
+
+        #region Basic Info
+        public async Task<ServerInfo> GetServerTime()
+        {
+            var result = await CallAsync<ServerInfo>(ApiMethod.GET, EndPoints.CheckServerTime, false);
+
+            return result;
+        }
+        public async Task<long> GetServerTimeWithCached()
+        {
+            var Cachedtime = CacheClient.Get<long>(serverTimeKey);
+            var unixTimeNow = Utilities.GenerateTimeStamp(DateTime.Now.ToUniversalTime());
+            if (Cachedtime == default || Cachedtime <= 0)
+            {
+                var serverTime = (await GetServerTime()).ServerTime;
+                CacheClient.Set(serverTimeKey, unixTimeNow - serverTime);
+                return serverTime;
+            }
+
+            return unixTimeNow - Cachedtime;
+        }
+        #endregion
 
         /// <summary>
         /// Calls API Methods.
@@ -117,7 +143,8 @@ namespace Binances.Helper
                     eventData = JsonConvert.DeserializeObject<T>(e.Data);
                 }
 
-                messageHandler(eventData);
+                int t = messageHandler(eventData);
+                if (t == 10) ws.CloseAsync();
             };
 
             ws.OnClose += (sender, e) =>
