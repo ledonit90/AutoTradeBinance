@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ServiceStack.Caching;
 using Binances.Helper.Models.General;
+using ServiceStack;
 
 namespace Binances.Helper
 {
@@ -28,6 +29,7 @@ namespace Binances.Helper
         /// <param name="apiUrl">API base url.</param>
         public ApiClient(string apiKey, string apiSecret, string apiUrl = @"https://www.binance.com", string webSocketEndpoint = @"wss://stream.binance.com:9443/stream?streams=", bool addDefaultHeaders = true) : base(apiKey, apiSecret, apiUrl, webSocketEndpoint, addDefaultHeaders)
         {
+            CacheClient = HostContext.TryResolve<ICacheClient>();
         }
 
         #region Basic Info
@@ -68,7 +70,7 @@ namespace Binances.Helper
             if (isSigned)
             {
                 // Joining provided parameters
-                parameters += (!string.IsNullOrWhiteSpace(parameters) ? "&timestamp=" : "timestamp=") + Utilities.GenerateTimeStamp(DateTime.Now.ToUniversalTime());
+                parameters += (!string.IsNullOrWhiteSpace(parameters) ? "&timestamp=" : "timestamp=") + (await GetServerTimeWithCached()).ToString();
 
                 // Creating request signature
                 var signature = Utilities.GenerateSignature(_apiSecret, parameters);
