@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Binances.Helper.Models.WebSocket
 {
-    public class StreamMessage
+    public class StreamMessage<T> where T : class
     {
         public string stream { get; set; }
-        public AggregateTradeMessage data { get; set; }
+        public T data { get; set; }
     }
 }

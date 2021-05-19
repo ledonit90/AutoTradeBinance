@@ -624,7 +624,7 @@ namespace Binances.Helper
         /// </summary>
         /// <param name="symbol">Ticker symbol.</param>
         /// <param name="tradeHandler">Handler to be used when a message is received.</param>
-        public void ListenTradeEndpoint(string symbol, ApiClientAbstract.MessageHandler<StreamMessage> tradeHandler)
+        public void ListenTradeEndpoint(string symbol, ApiClientAbstract.MessageHandler<StreamMessage<AggregateTradeMessage>> tradeHandler)
         {
             if (string.IsNullOrWhiteSpace(symbol))
             {
@@ -642,9 +642,9 @@ namespace Binances.Helper
         /// <param name="tradesHandler">Handler to be used when a trade message is received.</param>
         /// <param name="ordersHandler">Handler to be used when a order message is received.</param>
         /// <returns></returns>
-        public string ListenUserDataEndpoint(ApiClientAbstract.MessageHandler<AccountUpdatedMessage> accountInfoHandler, ApiClientAbstract.MessageHandler<OrderOrTradeUpdatedMessage> tradesHandler, ApiClientAbstract.MessageHandler<OrderOrTradeUpdatedMessage> ordersHandler)
+        public async Task<string> ListenUserDataEndpointAsync(ApiClientAbstract.MessageHandler<StreamMessage<AccountUpdatedMessage>> accountInfoHandler, ApiClientAbstract.MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> tradesHandler, ApiClientAbstract.MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> ordersHandler)
         {
-            var listenKey = StartUserStream().Result.ListenKey;
+            var listenKey = (await StartUserStream()).ListenKey;
 
             _apiClient.ConnectToUserDataWebSocket(listenKey, accountInfoHandler, tradesHandler, ordersHandler);
 

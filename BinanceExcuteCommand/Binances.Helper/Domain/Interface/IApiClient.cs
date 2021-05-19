@@ -34,6 +34,6 @@ namespace Binances.Helper.Domain.Interface
         /// <param name="accountHandler">Deletage to callback after receive a account info message.</param>
         /// <param name="tradeHandler">Deletage to callback after receive a trade message.</param>
         /// <param name="orderHandler">Deletage to callback after receive a order message.</param>
-        void ConnectToUserDataWebSocket(string parameters, MessageHandler<AccountUpdatedMessage> accountHandler, MessageHandler<OrderOrTradeUpdatedMessage> tradeHandler, MessageHandler<OrderOrTradeUpdatedMessage> orderHandler);
+        void ConnectToUserDataWebSocket(string parameters, MessageHandler<StreamMessage<AccountUpdatedMessage>> accountInfoHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> tradesHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> ordersHandler);
     }
 }

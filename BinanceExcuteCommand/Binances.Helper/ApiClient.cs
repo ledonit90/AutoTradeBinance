@@ -170,34 +170,41 @@ namespace Binances.Helper
         /// <param name="accountHandler">Deletage to callback after receive a account info message.</param>
         /// <param name="tradeHandler">Deletage to callback after receive a trade message.</param>
         /// <param name="orderHandler">Deletage to callback after receive a order message.</param>
-        public void ConnectToUserDataWebSocket(string parameters, MessageHandler<AccountUpdatedMessage> accountHandler, MessageHandler<OrderOrTradeUpdatedMessage> tradeHandler, MessageHandler<OrderOrTradeUpdatedMessage> orderHandler)
+        public void ConnectToUserDataWebSocket(string parameters, MessageHandler<StreamMessage<AccountUpdatedMessage>> accountInfoHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> tradesHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> ordersHandler)
         {
             var finalEndpoint = _webSocketEndpoint + parameters;
 
             var ws = new WebSocket(finalEndpoint);
 
-            ws.OnMessage += (sender, e) =>
+            ws.OnMessage += async (sender, e) =>
             {
-                var eventData = JsonConvert.DeserializeObject<dynamic>(e.Data);
-
-                switch (eventData.e)
+                var eventData = JsonConvert.DeserializeObject<StreamMessage<dynamic>>(e.Data);
+                int t = 0;
+                JValue excuteType = (JValue)eventData.data["e"];
+                switch (excuteType.ToString())
                 {
-                    case "outboundAccountInfo":
-                        accountHandler(JsonConvert.DeserializeObject<AccountUpdatedMessage>(e.Data));
+                    case "outboundAccountPosition":
+                        t = await accountInfoHandler(JsonConvert.DeserializeObject<StreamMessage<AccountUpdatedMessage>>(e.Data));
                         break;
                     case "executionReport":
-                        var isTrade = ((string)eventData.x).ToLower() == "trade";
+                        var message = JsonConvert.DeserializeObject<StreamMessage<OrderOrTradeUpdatedMessage>>(e.Data);
+                        var isTrade = message.data.ExecutionType.ToLower() == "trade";
 
                         if (isTrade)
                         {
-                            tradeHandler(JsonConvert.DeserializeObject<OrderOrTradeUpdatedMessage>(e.Data));
+                            t = await tradesHandler(message);
                         }
                         else
                         {
-                            orderHandler(JsonConvert.DeserializeObject<OrderOrTradeUpdatedMessage>(e.Data));
+                            t = await ordersHandler(message);
                         }
                         break;
+                    case "balanceUpdate":
+                        Console.WriteLine("test ti thoi");
+                        break;
                 }
+
+                if (t == 10) ws.CloseAsync();
             };
 
             ws.OnClose += (sender, e) =>

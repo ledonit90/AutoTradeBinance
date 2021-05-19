@@ -22,6 +22,14 @@ namespace Binances.Helper.Models.WebSocket
         public decimal OriginalQuantity { get; set; }
         [JsonProperty("p")]
         public decimal Price { get; set; }
+        [JsonProperty("P")]
+        public decimal StopPrice { get; set; }
+        [JsonProperty("F")]
+        public decimal IcebergQuantity { get; set; }
+        [JsonProperty("g")]
+        public long OrderListId { get; set; }
+        [JsonProperty("C")]
+        public string OriginalOrderIdCancelled { get; set; }
         [JsonProperty("x")]
         public string ExecutionType { get; set; }
         [JsonProperty("X")]
@@ -44,7 +52,22 @@ namespace Binances.Helper.Models.WebSocket
         public long TradeTime { get; set; }
         [JsonProperty("t")]
         public int TradeId { get; set; }
+        [JsonProperty("I")]
+        public int Ignore { get; set; }
+        [JsonProperty("w")]
+        public bool IsOrderOnTheBook { get; set; }
         [JsonProperty("m")]
         public bool BuyerIsMaker { get; set; }
+        [JsonProperty("M")]
+        public bool Ignore2 { get; set; }
+        [JsonProperty("O")]
+        public long OrderCreationTime { get; set; }
+        [JsonProperty("Z")]
+        public decimal TransactedQuantity { get; set; }// Cumulative Quote Asset Transacted Quantity
+        [JsonProperty("Y")]
+        public decimal LastTransactedQuantity { get; set; } // Last quote asset transacted quantity (i.e. lastPrice * lastQty)
+        [JsonProperty("Q")]
+        public decimal QuoteOrderQty { get; set; } // Quote Order Qty
+
     }
 }

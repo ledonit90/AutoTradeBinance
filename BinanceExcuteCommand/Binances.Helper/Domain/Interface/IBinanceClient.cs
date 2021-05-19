@@ -231,7 +231,7 @@ namespace Binances.Helper.Domain.Interface
         /// </summary>
         /// <param name="symbol">Ticker symbol.</param>
         /// <param name="tradeHandler">Handler to be used when a message is received.</param>
-        void ListenTradeEndpoint(string symbol, MessageHandler<StreamMessage> messageHandler);
+        void ListenTradeEndpoint(string symbol, MessageHandler<StreamMessage<AggregateTradeMessage>> messageHandler);
 
         /// <summary>
         /// Listen to the User Data endpoint.
@@ -240,7 +240,7 @@ namespace Binances.Helper.Domain.Interface
         /// <param name="tradesHandler">Handler to be used when a trade message is received.</param>
         /// <param name="ordersHandler">Handler to be used when a order message is received.</param>
         /// <returns></returns>
-        string ListenUserDataEndpoint(MessageHandler<AccountUpdatedMessage> accountInfoHandler, MessageHandler<OrderOrTradeUpdatedMessage> tradesHandler, MessageHandler<OrderOrTradeUpdatedMessage> ordersHandler);
+        Task<string> ListenUserDataEndpointAsync(MessageHandler<StreamMessage<AccountUpdatedMessage>> accountInfoHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> tradesHandler, MessageHandler<StreamMessage<OrderOrTradeUpdatedMessage>> ordersHandler);
         #endregion
     }
 }

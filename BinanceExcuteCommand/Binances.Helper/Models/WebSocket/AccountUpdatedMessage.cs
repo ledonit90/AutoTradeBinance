@@ -9,22 +9,23 @@ namespace Binances.Helper.Models.WebSocket
         public string EventType { get; set; }
         [JsonProperty("E")]
         public long EventTime { get; set; }
-        [JsonProperty("m")]
-        public int MakerCommission { get; set; }
-        [JsonProperty("t")]
-        public int TakerCommission { get; set; }
-        [JsonProperty("b")]
-        public int BuyerCommission { get; set; }
-        [JsonProperty("s")]
-        public int SellerCommission { get; set; }
-        [JsonProperty("t")]
-        public bool CanTrade { get; set; }
-        [JsonProperty("w")]
-        public bool CanWithdraw { get; set; }
-        [JsonProperty("d")]
-        public bool CanDeposit { get; set; }
+        [JsonProperty("u")]
+        public long TimeOfLastAccountUpdate { get; set; }
         [JsonProperty("B")]
         public IEnumerable<Balance> Balances { get; set; }
+    }
+    public class BalanceUpdatedMessage
+    {
+        [JsonProperty("e")]
+        public string EventType { get; set; }
+        [JsonProperty("E")]
+        public long EventTime { get; set; }
+        [JsonProperty("a")]
+        public string Asset { get; set; }
+        [JsonProperty("d")]
+        public decimal BalanceDelta { get; set; }
+        [JsonProperty("T")]
+        public long ClearTime { get; set; }
     }
     public class Balance
     {
