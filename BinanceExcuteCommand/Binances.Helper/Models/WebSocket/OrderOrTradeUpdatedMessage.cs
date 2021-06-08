@@ -31,7 +31,7 @@ namespace Binances.Helper.Models.WebSocket
         [JsonProperty("C")]
         public string OriginalOrderIdCancelled { get; set; }
         [JsonProperty("x")]
-        public string ExecutionType { get; set; }
+        public string ExecutionType { get; set;}
         [JsonProperty("X")]
         public string Status { get; set; }
         [JsonProperty("r")]

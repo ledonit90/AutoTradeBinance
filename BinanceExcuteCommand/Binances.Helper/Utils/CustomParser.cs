@@ -79,7 +79,8 @@ namespace Binances.Helper.Utils
                 EventType = messageData["e"],
                 EventTime = messageData["E"],
                 Symbol = messageData["s"],
-                UpdateId = messageData["u"]
+                LastUpdateId = messageData["u"],
+                FistUpdateId = messageData["U"]
             };
 
             var bids = new List<OrderBookOffer>();

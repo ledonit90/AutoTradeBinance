@@ -98,6 +98,7 @@
     <Compile Include="Models\Account\WithdrawResponse.cs" />
     <Compile Include="Models\Enums\ApiMethods.cs" />
     <Compile Include="Models\Enums\DepositStatus.cs" />
+    <Compile Include="Models\Enums\ExecutionTypes.cs" />
     <Compile Include="Models\Enums\OrderSide.cs" />
     <Compile Include="Models\Enums\OrderType.cs" />
     <Compile Include="Models\Enums\TimeInForce.cs" />

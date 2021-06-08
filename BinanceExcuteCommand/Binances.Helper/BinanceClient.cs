@@ -22,6 +22,7 @@ namespace Binances.Helper
         public TradingRules _tradingRules { get; set; }
         public ICacheClient CacheClient { get; set; }
         public string serverTimeKey = "serverTimeCached";
+        public string TradingRulesKey = "TradingRulesCached";
         /// <summary>
         /// ctor.
         /// </summary>
@@ -29,16 +30,20 @@ namespace Binances.Helper
         /// <param name="loadTradingRules">Optional parameter to skip loading trading rules.</param>
         public BinanceClient(IApiClient apiClient, bool loadTradingRules = false) : base(apiClient)
         {
+            CacheClient = HostContext.TryResolve<ICacheClient>();
             if (loadTradingRules)
             {
-                this._tradingRules = LoadTradingRulesAsync().Result;
+                var _tradingRules = CacheClient.Get<TradingRules>(TradingRulesKey);
+                if(_tradingRules == null)
+                {
+                    this._tradingRules = LoadTradingRulesAsync().Result;
+                    CacheClient.Set(TradingRulesKey, this._tradingRules,DateTime.Now.AddDays(1));
+                }
+                else
+                {
+                    this._tradingRules =_tradingRules;
+                }
             }
-            InitService();
-        }
-
-        public void InitService()
-        {
-            CacheClient = HostContext.TryResolve<ICacheClient>();
         }
 
         #region Private Methods
@@ -289,7 +294,7 @@ namespace Binances.Helper
         /// <param name="timeInForce">Indicates how long an order will remain active before it is executed or expires.</param>
         /// <param name="recvWindow">Specific number of milliseconds the request is valid for.</param>
         /// <returns></returns>
-        public async Task<NewOrder> PostNewOrder(string symbol, decimal quantity, decimal price, OrderSide side, OrderType orderType = OrderType.LIMIT, TimeInForce timeInForce = TimeInForce.GTC, decimal icebergQty = 0m, long recvWindow = 5000)
+        public async Task<NewOrder> PostNewOrder(string symbol, decimal quantity, decimal price, OrderSide side, OrderType orderType = OrderType.LIMIT, string newClientOrderId = "", TimeInForce timeInForce = TimeInForce.GTC, decimal icebergQty = 0m, long recvWindow = 5000)
         {
             // Standard form converter for price, quantity( PRICE_FILTER, LOT_SIZE)
             OrderBookOffer newPriceQuantity = new OrderBookOffer() { Price = price, Quantity = quantity };
@@ -301,6 +306,7 @@ namespace Binances.Helper
                 + (orderType == OrderType.LIMIT ? $"&timeInForce={timeInForce}" : "")
                 + (orderType == OrderType.LIMIT ? $"&price={newPriceQuantity.Price}" : "")
                 + (icebergQty > 0m ? $"&icebergQty={icebergQty}" : "")
+                + (!string.IsNullOrEmpty(newClientOrderId) ? $"&newClientOrderId={newClientOrderId}" : "")
                 + $"&recvWindow={recvWindow}";
             var result = await _apiClient.CallAsync<NewOrder>(ApiMethod.POST, EndPoints.NewOrder, true, args);
 
@@ -566,7 +572,6 @@ namespace Binances.Helper
 
             return result;
         }
-
         /// <summary>
         /// Close out a user data stream.
         /// </summary>

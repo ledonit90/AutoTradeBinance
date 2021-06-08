@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using ServiceStack.Caching;
 using Binances.Helper.Models.General;
 using ServiceStack;
+using System.Threading;
 
 namespace Binances.Helper
 {
@@ -130,10 +131,10 @@ namespace Binances.Helper
             var finalEndpoint = _webSocketEndpoint + parameters;
 
             var ws = new WebSocket(finalEndpoint);
-
             ws.OnMessage += (sender, e) =>
             {
                 dynamic eventData;
+                Console.WriteLine("Thread ConnectToWebSocket 1 : " + Thread.CurrentThread.GetHashCode());
 
                 if (useCustomParser)
                 {
@@ -219,6 +220,20 @@ namespace Binances.Helper
 
             ws.Connect();
             _openSockets.Add(ws);
+        }
+        public async Task KeepAliveWebsocket(WebSocket ws)
+        {
+            try
+            {
+                ws.SendAsync("{ method: \"keepAlive\" }", isSuccess =>
+                {
+                    Console.WriteLine("da success keepAlive nhé");
+                });
+            }
+            catch(Exception ex)
+            {
+                
+            }
         }
     }
 }

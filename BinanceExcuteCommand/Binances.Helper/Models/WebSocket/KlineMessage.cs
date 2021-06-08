@@ -47,6 +47,8 @@ namespace Binances.Helper.Models.WebSocket
             public decimal ActiveBuyVolume { get; set; }
             [JsonProperty("Q")]
             public decimal ActiveBuyQuoteVolume { get; set; }
+            [JsonProperty("B")]
+            public string Ignore { get; set; }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Remibit.Models.Binance;
+﻿using Binances.Helper.Models.Enums;
+using Remibit.Models.Binance;
 using System;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -58,6 +59,29 @@ namespace Binances.Helper.Utils
                     return HttpMethod.Put;
                 case "GET":
                     return HttpMethod.Get;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public static OrderStatus OrderStatusConverter(string value)
+        {
+            switch(value)
+            {
+                case "NEW":
+                    return OrderStatus.NEW;
+                case "PARTIALLY_FILLED":
+                    return OrderStatus.PARTIALLY_FILLED;
+                case "FILLED":
+                    return OrderStatus.FILLED;
+                case "CANCELED":
+                    return OrderStatus.CANCELED;
+                case "PENDING_CANCEL":
+                    return OrderStatus.PENDING_CANCEL;
+                case "REJECTED":
+                    return OrderStatus.REJECTED;
+                case "EXPIRED":
+                    return OrderStatus.EXPIRED;
                 default:
                     throw new NotImplementedException();
             }
